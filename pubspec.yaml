@@ -1,0 +1,36 @@
+name: toidym
+description: "Боксы с едой на самовывоз в Астане."
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  cupertino_icons: ^1.0.8
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_map: ^8.2.2
+  flutter_svg: ^2.2.1
+  latlong2: ^0.9.1
+  mobile_scanner: ^7.2.0
+  qr_flutter: ^4.1.0
+  share_plus: ^12.0.1
+  shared_preferences: ^2.5.3
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/Nunito.ttf
