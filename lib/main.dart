@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart' show CupertinoIcons;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,11 +8,21 @@ import 'browse.dart';
 import 'merchant.dart';
 import 'models.dart';
 import 'orders.dart';
+import 'pilot_store.dart';
 import 'ui.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final store = AppStore(SharedPreferencesAsync());
+  const endpoint = String.fromEnvironment('TOIDYM_API');
+  final preferences = SharedPreferencesAsync();
+  final store = endpoint.isEmpty
+      ? AppStore(preferences)
+      : PilotStore(
+          preferences,
+          endpoint == 'same-origin'
+              ? Uri.base.resolve('/')
+              : Uri.parse(endpoint.endsWith('/') ? endpoint : '$endpoint/'),
+        );
   await store.load();
   runApp(ToidymApp(store: store));
 }
@@ -42,7 +54,7 @@ class _ToidymAppState extends State<ToidymApp> {
           color: lavender,
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 500),
+              constraints: const BoxConstraints(maxWidth: kIsWeb ? 440 : 500),
               child: child,
             ),
           ),
@@ -62,7 +74,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int tab = 0;
   bool merchant = false;
-  void select(int index) => setState(() => tab = index);
+  void select(int index) {
+    if (index == tab) return;
+    if (kIsWeb) FocusManager.instance.primaryFocus?.unfocus();
+    setState(() => tab = index);
+  }
 
   void switchMode() {
     setState(() {
@@ -85,20 +101,36 @@ class _HomeState extends State<Home> {
         2 => OrdersPage(onBrowse: () => select(0)),
         _ => ProfilePage(onMerchant: switchMode),
       },
-      bottomNavigationBar: TabsBar(
-        index: tab,
-        onChange: select,
-        items: [
-          (Icons.inventory_2_outlined, context.tr('Боксы', 'Бокстар'), 0),
-          (Icons.map_outlined, context.tr('Карта', 'Карта'), 0),
-          (
-            Icons.receipt_long_outlined,
-            context.tr('Заказы', 'Тапсырыстар'),
-            store.active.length,
-          ),
-          (Icons.person_outline, context.tr('Профиль', 'Профиль'), 0),
-        ],
-      ),
+      bottomNavigationBar: kIsWeb && MediaQuery.viewInsetsOf(context).bottom > 0
+          ? null
+          : TabsBar(
+              index: tab,
+              onChange: select,
+              items: [
+                (
+                  kIsWeb ? CupertinoIcons.cube_box : Icons.inventory_2_outlined,
+                  context.tr('Боксы', 'Бокстар'),
+                  0,
+                ),
+                (
+                  kIsWeb ? CupertinoIcons.map : Icons.map_outlined,
+                  context.tr('Карта', 'Карта'),
+                  0,
+                ),
+                (
+                  kIsWeb
+                      ? CupertinoIcons.doc_text
+                      : Icons.receipt_long_outlined,
+                  context.tr('Заказы', 'Тапсырыстар'),
+                  store.active.length,
+                ),
+                (
+                  kIsWeb ? CupertinoIcons.person : Icons.person_outline,
+                  context.tr('Профиль', 'Профиль'),
+                  0,
+                ),
+              ],
+            ),
     );
   }
 }

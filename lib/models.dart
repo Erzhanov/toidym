@@ -6,7 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum Category { bakery, hot, coffee }
 
-enum OrderStatus { reserved, collected, cancelled }
+enum OrderStatus { reserved, collected, cancelled, expired }
+
+class PilotError implements Exception {
+  const PilotError(this.code);
+  final String code;
+}
 
 class FoodBox {
   const FoodBox({
@@ -30,6 +35,8 @@ class FoodBox {
     this.published = true,
     this.description = '',
     this.merchant = false,
+    this.pickupStart,
+    this.pickupEnd,
   });
 
   final String id,
@@ -46,6 +53,7 @@ class FoodBox {
   final int price, original, stock, district;
   final double lat, lng;
   final bool halal, published, merchant;
+  final DateTime? pickupStart, pickupEnd;
 
   int get discount => ((original - price) * 100 / original).round();
 
@@ -70,6 +78,8 @@ class FoodBox {
     published: published ?? this.published,
     description: description,
     merchant: merchant,
+    pickupStart: pickupStart,
+    pickupEnd: pickupEnd,
   );
 
   Map<String, dynamic> toJson() => {
@@ -93,6 +103,8 @@ class FoodBox {
     'published': published,
     'description': description,
     'merchant': merchant,
+    'pickupStart': pickupStart?.toIso8601String(),
+    'pickupEnd': pickupEnd?.toIso8601String(),
   };
 
   factory FoodBox.fromJson(Map<String, dynamic> json) => FoodBox(
@@ -116,6 +128,8 @@ class FoodBox {
     published: json['published'],
     description: json['description'] ?? '',
     merchant: json['merchant'] ?? false,
+    pickupStart: DateTime.tryParse(json['pickupStart'] ?? ''),
+    pickupEnd: DateTime.tryParse(json['pickupEnd'] ?? ''),
   );
 }
 
@@ -132,9 +146,11 @@ class PickupOrder {
     this.rating = 0,
     this.feedback = const [],
     this.issue = '',
+    this.resolution = '',
+    this.qr = '',
   });
 
-  final String id, code, issue, owner;
+  final String id, code, issue, owner, resolution, qr;
   final FoodBox box;
   final int quantity, rating;
   final DateTime created;
@@ -147,6 +163,7 @@ class PickupOrder {
 
   // All pickup windows are expressed in Astana time (UTC+5).
   DateTime get pickupStarts {
+    if (box.pickupStart case final start?) return start;
     final local = created.toUtc().add(const Duration(hours: 5));
     final parts = box.window.split('–').first.split(':');
     final today = DateTime.utc(
@@ -187,6 +204,8 @@ class PickupOrder {
     rating: rating ?? this.rating,
     feedback: feedback ?? this.feedback,
     issue: issue ?? this.issue,
+    resolution: resolution,
+    qr: qr,
   );
 
   Map<String, dynamic> toJson() => {
@@ -201,6 +220,8 @@ class PickupOrder {
     'rating': rating,
     'feedback': feedback,
     'issue': issue,
+    'resolution': resolution,
+    'qr': qr,
   };
 
   factory PickupOrder.fromJson(Map<String, dynamic> json) => PickupOrder(
@@ -215,6 +236,8 @@ class PickupOrder {
     rating: json['rating'],
     feedback: List<String>.from(json['feedback'] ?? []),
     issue: json['issue'],
+    resolution: json['resolution'] ?? '',
+    qr: json['qr'] ?? '',
   );
 }
 
@@ -222,6 +245,7 @@ class AppStore extends ChangeNotifier {
   AppStore(this._preferences);
 
   static const _key = 'toidym.demo.v1';
+  String get _storageKey => connected ? 'toidym.pilot.v1' : _key;
   final SharedPreferencesAsync _preferences;
   Future<void> _pending = Future.value();
 
@@ -239,6 +263,77 @@ class AppStore extends ChangeNotifier {
   List<PickupOrder> orders = [];
   Set<String> favorites = {};
 
+  bool get connected => false;
+  bool get demoAuth => true;
+  bool get admin => false;
+  bool get online => true;
+  bool get cashier => false;
+  String get venueReviewNote => '';
+  List<String> get staff => const [];
+  List<FoodBox> get inventory => const [];
+  List<PickupOrder> get branchOrders => const [];
+
+  Future<void> refresh() async {}
+
+  Future<void> requestCode(String phone) async {}
+
+  Future<void> verifyCode(String number, String code) async {
+    if (code != '4821') throw const PilotError('invalid_code');
+    phone = '+7 ${number.substring(2)}';
+    save();
+  }
+
+  Future<void> signOut() async {
+    phone = '';
+    save();
+  }
+
+  Future<PickupOrder?> book(
+    String boxId,
+    int quantity,
+    String requestId,
+  ) async => reserve(boxId, quantity);
+
+  Future<void> cancelBooking(PickupOrder order) async => cancel(order);
+  Future<void> saveReview(PickupOrder order) async => updateOrder(order);
+  Future<void> submitIssue(PickupOrder order, String issue) async =>
+      updateOrder(order.copyWith(issue: issue));
+
+  Future<void> submitVenue({
+    required String title,
+    required String address,
+    required String company,
+    required int district,
+    required double lat,
+    required double lng,
+  }) async {
+    venue = title;
+    venueAddress = address;
+    venueDistrict = district;
+    venueStatus = 'review';
+    save();
+  }
+
+  Future<void> publishBox(FoodBox box, String day) async => upsertBox(box);
+  Future<void> changeStock(FoodBox box, int stock) async =>
+      upsertBox(box.copyWith(stock: stock));
+  Future<void> changeVisibility(FoodBox box, bool published) async =>
+      upsertBox(box.copyWith(published: published));
+  Future<PickupOrder?> checkPickup(String code, String shop) async => orders
+      .where(
+        (order) =>
+            order.code == code &&
+            order.box.shop == shop &&
+            order.box.merchant &&
+            order.status == OrderStatus.reserved,
+      )
+      .firstOrNull;
+  Future<PickupOrder?> finishPickup(
+    String code,
+    String shop,
+    String orderId,
+  ) async => collect(code, shop);
+
   @override
   void dispose() {
     language.dispose();
@@ -254,12 +349,16 @@ class AppStore extends ChangeNotifier {
       buyerOrders.where((o) => o.status == OrderStatus.collected).toList();
 
   Future<void> load() async {
-    final raw = await _preferences.getString(_key);
+    final raw =
+        await _preferences.getString(_storageKey) ??
+        (connected ? await _preferences.getString(_key) : null);
     if (raw == null) return;
     final json = jsonDecode(raw) as Map<String, dynamic>;
     kazakh = json['kazakh'];
     onboarded = json['onboarded'];
     district = json['district'];
+    favorites = Set<String>.from(json['favorites']);
+    if (connected) return;
     phone = json['phone'];
     venue = json['venue'] ?? '';
     venueAddress = json['venueAddress'] ?? '';
@@ -269,7 +368,6 @@ class AppStore extends ChangeNotifier {
     orders = (json['orders'] as List)
         .map((o) => PickupOrder.fromJson(o))
         .toList();
-    favorites = Set<String>.from(json['favorites']);
   }
 
   void save() {
@@ -277,17 +375,19 @@ class AppStore extends ChangeNotifier {
       'kazakh': kazakh,
       'onboarded': onboarded,
       'district': district,
-      'phone': phone,
-      'venue': venue,
-      'venueAddress': venueAddress,
-      'venueStatus': venueStatus,
-      'venueDistrict': venueDistrict,
-      'boxes': boxes.map((box) => box.toJson()).toList(),
-      'orders': orders.map((order) => order.toJson()).toList(),
+      if (!connected) ...{
+        'phone': phone,
+        'venue': venue,
+        'venueAddress': venueAddress,
+        'venueStatus': venueStatus,
+        'venueDistrict': venueDistrict,
+        'boxes': boxes.map((box) => box.toJson()).toList(),
+        'orders': orders.map((order) => order.toJson()).toList(),
+      },
       'favorites': favorites.toList(),
     });
     _pending = _pending
-        .then((_) => _preferences.setString(_key, json))
+        .then((_) => _preferences.setString(_storageKey, json))
         .catchError(
           (Object error, StackTrace stack) => FlutterError.reportError(
             FlutterErrorDetails(

@@ -7,6 +7,8 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'browse.dart';
 import 'models.dart';
 import 'orders.dart';
+import 'pilot_store.dart';
+import 'admin.dart';
 import 'ui.dart';
 
 class MerchantShell extends StatefulWidget {
@@ -26,18 +28,48 @@ class _MerchantShellState extends State<MerchantShell> {
     final store = context.store;
     final shop = demo ? 'Таңғы нан' : store.venue;
     final ready = demo || store.venueStatus == 'approved';
-    final boxes = store.boxes
-        .where((b) => b.merchant && b.shop == shop)
-        .toList();
-    final orders = store.orders
-        .where((o) => o.box.merchant && o.box.shop == shop)
-        .toList();
+    final boxes = store.connected
+        ? store.inventory
+        : store.boxes.where((b) => b.merchant && b.shop == shop).toList();
+    final orders = store.connected
+        ? store.branchOrders
+        : store.orders
+              .where((o) => o.box.merchant && o.box.shop == shop)
+              .toList();
     final waiting = orders
         .where((o) => o.status == OrderStatus.reserved)
         .toList();
     final completed = orders
         .where((o) => o.status == OrderStatus.collected)
         .toList();
+    DateTime astanaDay(DateTime time) =>
+        DateUtils.dateOnly(time.toUtc().add(const Duration(hours: 5)));
+    final today = astanaDay(DateTime.now());
+    final givenToday = completed
+        .where(
+          (order) => astanaDay(order.collectedAt ?? order.created) == today,
+        )
+        .fold(0, (total, order) => total + order.quantity);
+    final missedToday = orders
+        .where(
+          (order) =>
+              order.status == OrderStatus.expired &&
+              astanaDay(order.box.pickupEnd ?? order.created) == today,
+        )
+        .length;
+    final bookedToday = orders
+        .where((order) => astanaDay(order.created) == today)
+        .length;
+
+    if (ready && store.cashier) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(context.tr('Касса · $shop', 'Касса · $shop')),
+          leading: BackButton(onPressed: widget.onExit),
+        ),
+        body: PickupPage(shop: shop, waiting: waiting),
+      );
+    }
 
     if (!ready) {
       return Scaffold(
@@ -66,7 +98,12 @@ class _MerchantShellState extends State<MerchantShell> {
               ),
             ),
             const SizedBox(height: 18),
-            if (store.venueStatus == 'review') ...[
+            if (store.connected && !store.signedIn)
+              fullButton(
+                context.tr('Войти', 'Кіру'),
+                () => openPage(context, const SignInPage()),
+              )
+            else if (store.venueStatus == 'review') ...[
               Panel(
                 color: pale,
                 child: Column(
@@ -77,33 +114,46 @@ class _MerchantShellState extends State<MerchantShell> {
                     Text(store.venue, style: heading(21)),
                     const SizedBox(height: 5),
                     Text(
-                      context.tr(
-                        'Демо-заявка хранится на этом устройстве.',
-                        'Демо өтінім осы құрылғыда сақталады.',
-                      ),
+                      store.connected
+                          ? context.tr(
+                              'Ожидаем решение администратора.',
+                              'Әкімшінің шешімін күтеміз.',
+                            )
+                          : context.tr(
+                              'Демо-заявка хранится на этом устройстве.',
+                              'Демо өтінім осы құрылғыда сақталады.',
+                            ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 10),
-              fullButton(
-                context.tr('Одобрить в демо', 'Демода мақұлдау'),
-                () => store
-                  ..venueStatus = 'approved'
-                  ..save(),
-              ),
-            ] else
+              if (!store.connected)
+                fullButton(
+                  context.tr('Одобрить в демо', 'Демода мақұлдау'),
+                  () => store
+                    ..venueStatus = 'approved'
+                    ..save(),
+                ),
+            ] else ...[
+              if (store.venueStatus == 'rejected') ...[
+                Panel(color: pale, child: Text(store.venueReviewNote)),
+                const SizedBox(height: 10),
+              ],
               fullButton(
                 context.tr('Стать партнёром', 'Серіктес болу'),
                 () => openPage(context, const VenueApplication()),
               ),
-            const SizedBox(height: 10),
-            OutlinedButton(
-              onPressed: () => setState(() => demo = true),
-              child: Text(
-                context.tr('Открыть демо пекарни', 'Наубайхана демосын ашу'),
+            ],
+            if (!store.connected) ...[
+              const SizedBox(height: 10),
+              OutlinedButton(
+                onPressed: () => setState(() => demo = true),
+                child: Text(
+                  context.tr('Открыть демо пекарни', 'Наубайхана демосын ашу'),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       );
@@ -136,8 +186,11 @@ class _MerchantShellState extends State<MerchantShell> {
                     child: Column(
                       children: [
                         SummaryLine(
-                          context.tr('Выдано боксов', 'Берілген бокстар'),
-                          '${completed.fold(0, (total, order) => total + order.quantity)}',
+                          context.tr(
+                            'Боксов выдано сегодня',
+                            'Бүгін берілген бокстар',
+                          ),
+                          '$givenToday',
                           strong: true,
                         ),
                         SummaryLine(
@@ -145,6 +198,19 @@ class _MerchantShellState extends State<MerchantShell> {
                           '${waiting.length}',
                           strong: true,
                         ),
+                        if (store.connected) ...[
+                          SummaryLine(
+                            context.tr('Броней сегодня', 'Бүгінгі броньдар'),
+                            '$bookedToday',
+                          ),
+                          SummaryLine(
+                            context.tr(
+                              'Пропущено сегодня',
+                              'Бүгін алынбаған тапсырыстар',
+                            ),
+                            '$missedToday',
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -163,9 +229,16 @@ class _MerchantShellState extends State<MerchantShell> {
                       ),
                     ),
                   ),
+                  if (store is PilotStore)
+                    TextButton.icon(
+                      onPressed: () =>
+                          openPage(context, StaffPage(store: store)),
+                      icon: const Icon(Icons.group_outlined),
+                      label: Text(context.tr('Сотрудники', 'Қызметкерлер')),
+                    ),
                   const SizedBox(height: 18),
                   Text(
-                    context.tr('Боксы сегодня', 'Бүгінгі бокстар'),
+                    context.tr('Объявления', 'Жарияланымдар'),
                     style: heading(24),
                   ),
                   const SizedBox(height: 10),
@@ -188,9 +261,14 @@ class _MerchantShellState extends State<MerchantShell> {
                               contentPadding: EdgeInsets.zero,
                               title: Text(context.tr('В продаже', 'Сатылымда')),
                               value: box.published,
-                              onChanged: (value) => store.upsertBox(
-                                box.copyWith(published: value),
-                              ),
+                              onChanged:
+                                  box.pickupEnd?.isBefore(DateTime.now()) ==
+                                      true
+                                  ? null
+                                  : (value) => pilotAction(
+                                      context,
+                                      () => store.changeVisibility(box, value),
+                                    ),
                             ),
                             Row(
                               children: [
@@ -204,8 +282,9 @@ class _MerchantShellState extends State<MerchantShell> {
                                   value: box.stock,
                                   min: 0,
                                   max: 99,
-                                  onChanged: (value) => store.upsertBox(
-                                    box.copyWith(stock: value),
+                                  onChanged: (value) => pilotAction(
+                                    context,
+                                    () => store.changeStock(box, value),
                                   ),
                                 ),
                               ],
@@ -245,6 +324,9 @@ class _VenueApplicationState extends State<VenueApplication> {
   final title = TextEditingController();
   final address = TextEditingController();
   final company = TextEditingController();
+  final latitude = TextEditingController();
+  final longitude = TextEditingController();
+  bool submitting = false;
   int district = 0;
   bool agreed = false;
 
@@ -253,6 +335,8 @@ class _VenueApplicationState extends State<VenueApplication> {
     title.dispose();
     address.dispose();
     company.dispose();
+    latitude.dispose();
+    longitude.dispose();
     super.dispose();
   }
 
@@ -260,13 +344,33 @@ class _VenueApplicationState extends State<VenueApplication> {
     padding: const EdgeInsets.only(top: 9),
     child: TextFormField(
       controller: controller,
+      keyboardType: controller == latitude || controller == longitude
+          ? const TextInputType.numberWithOptions(decimal: true)
+          : TextInputType.text,
       maxLength: 65,
       decoration: InputDecoration(labelText: label, counterText: ''),
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return context.tr('Обязательное поле', 'Міндетті өріс');
         }
-        if (controller == title && value.trim() == 'Таңғы нан') {
+        if (controller == latitude || controller == longitude) {
+          final coordinate = double.tryParse(value.trim().replaceAll(',', '.'));
+          final (low, high) = controller == latitude
+              ? (50.9, 51.4)
+              : (71.1, 71.8);
+          if (coordinate == null ||
+              !coordinate.isFinite ||
+              coordinate < low ||
+              coordinate > high) {
+            return context.tr(
+              'Координата в пределах Астаны',
+              'Астана шегіндегі координата',
+            );
+          }
+        }
+        if (!context.store.connected &&
+            controller == title &&
+            value.trim() == 'Таңғы нан') {
           return context.tr(
             'Это имя демо-пекарни',
             'Бұл демо наубайхананың атауы',
@@ -311,18 +415,28 @@ class _VenueApplicationState extends State<VenueApplication> {
                 ),
             ],
           ),
+          if (context.store.connected) ...[
+            field(
+              latitude,
+              context.tr(
+                'Широта (например, 51.1213)',
+                'Ендік (мысалы, 51.1213)',
+              ),
+            ),
+            field(
+              longitude,
+              context.tr(
+                'Долгота (например, 71.4175)',
+                'Бойлық (мысалы, 71.4175)',
+              ),
+            ),
+          ],
           const SizedBox(height: 18),
           Text(
             context.tr('3 · Юридические данные', '3 · Заңды деректер'),
             style: heading(22),
           ),
-          field(
-            company,
-            context.tr(
-              'Название компании (тестовое)',
-              'Компания атауы (сынақ)',
-            ),
-          ),
+          field(company, context.tr('Название компании', 'Компания атауы')),
           const SizedBox(height: 18),
           Text(context.tr('4 · Условия', '4 · Шарттар'), style: heading(22)),
           CheckboxListTile(
@@ -338,17 +452,35 @@ class _VenueApplicationState extends State<VenueApplication> {
           ),
           const SizedBox(height: 10),
           fullButton(
-            context.tr('Сохранить демо-заявку', 'Демо өтінімді сақтау'),
-            agreed
-                ? () {
+            context.tr('Отправить заявку', 'Өтінімді жіберу'),
+            agreed && !submitting
+                ? () async {
                     if (!form.currentState!.validate()) return;
-                    context.store
-                      ..venue = title.text.trim()
-                      ..venueAddress = address.text.trim()
-                      ..venueDistrict = district
-                      ..venueStatus = 'review'
-                      ..save();
-                    Navigator.pop(context);
+                    final store = context.store;
+                    final (defaultLat, defaultLng) = districtPoints[district];
+                    setState(() => submitting = true);
+                    final ok = await pilotAction(
+                      context,
+                      () => store.submitVenue(
+                        title: title.text.trim(),
+                        address: address.text.trim(),
+                        company: company.text.trim(),
+                        district: district,
+                        lat:
+                            double.tryParse(
+                              latitude.text.replaceAll(',', '.'),
+                            ) ??
+                            defaultLat,
+                        lng:
+                            double.tryParse(
+                              longitude.text.replaceAll(',', '.'),
+                            ) ??
+                            defaultLng,
+                      ),
+                    );
+                    if (!context.mounted) return;
+                    setState(() => submitting = false);
+                    if (ok) Navigator.pop(context);
                   }
                 : null,
           ),
@@ -382,9 +514,22 @@ class _NewBoxPageState extends State<NewBoxPage> {
   final price = TextEditingController();
   final original = TextEditingController();
   Category category = Category.bakery;
+  String? selectedImage;
+  String get image =>
+      selectedImage ??
+      switch (category) {
+        Category.bakery => 'bread',
+        Category.hot => 'bowl',
+        Category.coffee => 'pastry',
+      };
   TimeOfDay start = const TimeOfDay(hour: 20, minute: 0);
   TimeOfDay end = const TimeOfDay(hour: 21, minute: 0);
   int quantity = 1;
+  bool publishing = false;
+  DateTime day = DateUtils.dateOnly(
+    DateTime.now().toUtc().add(const Duration(hours: 5)),
+  );
+  String? listingId;
 
   @override
   void dispose() {
@@ -399,7 +544,7 @@ class _NewBoxPageState extends State<NewBoxPage> {
   int minutes(TimeOfDay time) => time.hour * 60 + time.minute;
 
   Future<void> preview() async {
-    if (!form.currentState!.validate()) return;
+    if (publishing || !form.currentState!.validate()) return;
     final originalPrice = int.parse(original.text);
     final newPrice = int.parse(price.text);
     if (newPrice * 2 > originalPrice) {
@@ -426,7 +571,7 @@ class _NewBoxPageState extends State<NewBoxPage> {
         ? (demoBoxes.first.lat, demoBoxes.first.lng)
         : districtPoints[widget.district];
     final box = FoodBox(
-      id: 'venue-${DateTime.now().microsecondsSinceEpoch}',
+      id: listingId ??= 'venue-${DateTime.now().microsecondsSinceEpoch}',
       shop: widget.shop,
       ru: titleRu.text.trim(),
       kk: titleKk.text.trim(),
@@ -439,11 +584,7 @@ class _NewBoxPageState extends State<NewBoxPage> {
       district: widget.district,
       lat: lat,
       lng: lng,
-      image: switch (category) {
-        Category.bakery => 'bread',
-        Category.hot => 'bowl',
-        Category.coffee => 'pastry',
-      },
+      image: image,
       description: contents.text.trim(),
       merchant: true,
     );
@@ -473,9 +614,18 @@ class _NewBoxPageState extends State<NewBoxPage> {
       ),
     );
     if (confirmed == true && mounted) {
-      context.store.upsertBox(box);
-      toast(context, context.tr('Бокс опубликован', 'Бокс жарияланды'));
-      Navigator.pop(context);
+      setState(() => publishing = true);
+      final store = context.store;
+      final ok = await pilotAction(
+        context,
+        () => store.publishBox(box, day.toIso8601String().substring(0, 10)),
+      );
+      if (!mounted) return;
+      setState(() => publishing = false);
+      if (ok) {
+        toast(context, context.tr('Бокс опубликован', 'Бокс жарияланды'));
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -515,7 +665,7 @@ class _NewBoxPageState extends State<NewBoxPage> {
           field(titleRu, 'Название (Русский)'),
           field(
             contents,
-            context.tr('Что может быть внутри', 'Ішінде не болуы мүмкін'),
+            context.tr('Состав и аллергены', 'Құрамы мен аллергендері'),
           ),
           DropdownButtonFormField<Category>(
             initialValue: category,
@@ -532,6 +682,30 @@ class _NewBoxPageState extends State<NewBoxPage> {
             onChanged: (value) => setState(() => category = value!),
           ),
           const SizedBox(height: 12),
+          if (context.store.connected) ...[
+            Text(
+              context.tr('Изображение бокса', 'Бокс суреті'),
+              style: heading(17),
+            ),
+            Wrap(
+              spacing: 8,
+              children: [
+                for (final (asset, ru, kk) in [
+                  ('bread', 'Хлеб', 'Нан'),
+                  ('bowl', 'Блюдо', 'Тағам'),
+                  ('pastry', 'Выпечка', 'Тоқаш'),
+                ])
+                  ChoiceChip(
+                    avatar: SizedBox(width: 20, child: art(asset)),
+                    label: Text(context.tr(ru, kk)),
+                    selected: image == asset,
+                    showCheckmark: false,
+                    onSelected: (_) => setState(() => selectedImage = asset),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
           field(
             original,
             context.tr('Обычная цена, ₸', 'Бастапқы баға, ₸'),
@@ -562,6 +736,28 @@ class _NewBoxPageState extends State<NewBoxPage> {
                   ],
                 ),
                 const SizedBox(height: 8),
+                if (context.store.connected)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(context.tr('Дата выдачи', 'Алып кету күні')),
+                    trailing: Text(
+                      MaterialLocalizations.of(context).formatShortDate(day),
+                    ),
+                    onTap: () async {
+                      final today = DateUtils.dateOnly(
+                        DateTime.now().toUtc().add(const Duration(hours: 5)),
+                      );
+                      final selected = await showDatePicker(
+                        context: context,
+                        initialDate: day.isBefore(today) ? today : day,
+                        firstDate: today,
+                        lastDate: today.add(const Duration(days: 13)),
+                      );
+                      if (selected != null && mounted) {
+                        setState(() => day = selected);
+                      }
+                    },
+                  ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
@@ -596,7 +792,10 @@ class _NewBoxPageState extends State<NewBoxPage> {
             ),
           ),
           const SizedBox(height: 12),
-          fullButton(context.tr('Предпросмотр', 'Алдын ала қарау'), preview),
+          fullButton(
+            context.tr('Предпросмотр', 'Алдын ала қарау'),
+            publishing ? null : preview,
+          ),
         ],
       ),
     ),
@@ -621,33 +820,38 @@ class _PickupPageState extends State<PickupPage> {
     super.dispose();
   }
 
-  Future<void> pickup() async {
-    final order = widget.waiting.where((o) => o.code == code.text).firstOrNull;
-    if (order == null) {
-      toast(
+  bool processing = false;
+
+  Future<void> pickup([String? scanned]) async {
+    if (processing) return;
+    final key = scanned ?? code.text;
+    final store = context.store;
+    setState(() => processing = true);
+    try {
+      final order = await store.checkPickup(key, widget.shop);
+      if (!mounted) return;
+      if (order == null) throw const PilotError('pickup_missing');
+      final confirmed = await confirmAction(
         context,
+        context.tr('Выдать ${order.id}?', '${order.id} тапсырысы берілсін бе?'),
         context.tr(
-          'Нет активного заказа с таким кодом.',
-          'Мұндай коды бар белсенді тапсырыс жоқ.',
+          'Оплата на месте · ${money(order.total)}',
+          'Сол жерде төлеу · ${money(order.total)}',
         ),
       );
-      return;
-    }
-    final confirmed = await confirmAction(
-      context,
-      context.tr('Выдать ${order.id}?', '${order.id} тапсырысы берілсін бе?'),
-      context.tr(
-        'Оплата на месте · ${money(order.total)}',
-        'Сол жерде төлеу · ${money(order.total)}',
-      ),
-    );
-    if (!confirmed || !mounted) return;
-    if (context.store.collect(order.code, widget.shop) != null) {
-      setState(code.clear);
-      toast(
-        context,
-        context.tr('Бокс выдан. Ас болсын!', 'Бокс берілді. Ас болсын!'),
-      );
+      if (!confirmed || !mounted) return;
+      final received = await store.finishPickup(key, widget.shop, order.id);
+      if (mounted && received != null) {
+        code.clear();
+        toast(
+          context,
+          context.tr('Бокс выдан. Ас болсын!', 'Бокс берілді. Ас болсын!'),
+        );
+      }
+    } on PilotError catch (error) {
+      if (mounted) toast(context, pilotMessage(context, error.code));
+    } finally {
+      if (mounted) setState(() => processing = false);
     }
   }
 
@@ -676,8 +880,7 @@ class _PickupPageState extends State<PickupPage> {
                       const ScannerPage(),
                     );
                     if (value != null && mounted) {
-                      setState(() => code.text = value);
-                      await pickup();
+                      await pickup(value);
                     }
                   },
                   child: Text(
@@ -707,7 +910,7 @@ class _PickupPageState extends State<PickupPage> {
         const SizedBox(height: 10),
         fullButton(
           context.tr('Выдать заказ', 'Тапсырысты беру'),
-          code.text.length == 4 ? pickup : null,
+          code.text.length == 4 && !processing ? pickup : null,
         ),
         const SizedBox(height: 18),
         Text(
@@ -753,7 +956,10 @@ class _PickupPageState extends State<PickupPage> {
                             ),
                           ) &&
                           context.mounted) {
-                        context.store.cancel(order);
+                        await pilotAction(
+                          context,
+                          () => context.store.cancelBooking(order),
+                        );
                       }
                     },
                     child: Text(context.tr('Отменить заказ', 'Тапсырысты жою')),
@@ -794,7 +1000,7 @@ class _ScannerPageState extends State<ScannerPage> {
         if (found) return;
         for (final barcode in capture.barcodes) {
           final code = RegExp(
-            r'^toidym:([0-9]{4})$',
+            r'^toidym:([0-9]{4}|[a-f0-9]{32})$',
           ).firstMatch(barcode.rawValue ?? '')?.group(1);
           if (code != null) {
             found = true;

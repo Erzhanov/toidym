@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,7 +40,15 @@ extension Copy on BuildContext {
     OrderStatus.reserved => tr('Ожидает выдачи', 'Алып кетуге дайын'),
     OrderStatus.collected => tr('Получен', 'Алынды'),
     OrderStatus.cancelled => tr('Отменён', 'Күші жойылды'),
+    OrderStatus.expired => tr('Истёк', 'Мерзімі өтті'),
   };
+
+  String pickupLabel(FoodBox box) {
+    final start = box.pickupStart;
+    if (start == null) return box.window;
+    final astana = start.toUtc().add(const Duration(hours: 5));
+    return '${MaterialLocalizations.of(this).formatShortDate(astana)} · ${box.window}';
+  }
 }
 
 String money(int value) {
@@ -59,9 +69,36 @@ TextStyle heading([double size = 27]) => TextStyle(
   letterSpacing: size >= 25 ? -0.65 : -0.15,
 );
 
+class _WebPageTransitions extends CupertinoPageTransitionsBuilder {
+  const _WebPageTransitions();
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 300);
+
+  @override
+  Duration get reverseTransitionDuration => const Duration(milliseconds: 260);
+}
+
 ThemeData appTheme() {
   final base = ThemeData(
     fontFamily: 'Nunito',
+    platform: kIsWeb ? TargetPlatform.iOS : null,
+    splashFactory: kIsWeb ? NoSplash.splashFactory : null,
+    pageTransitionsTheme: kIsWeb
+        ? const PageTransitionsTheme(
+            builders: {TargetPlatform.iOS: _WebPageTransitions()},
+          )
+        : null,
+    bottomSheetTheme: kIsWeb
+        ? const BottomSheetThemeData(
+            backgroundColor: cream,
+            modalBackgroundColor: cream,
+            surfaceTintColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+            ),
+          )
+        : null,
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
       seedColor: ink,
@@ -77,6 +114,7 @@ ThemeData appTheme() {
       backgroundColor: cream,
       foregroundColor: ink,
       centerTitle: false,
+      surfaceTintColor: Colors.transparent,
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
@@ -188,8 +226,13 @@ class PageBody extends StatelessWidget {
   final EdgeInsets padding;
 
   @override
-  Widget build(BuildContext context) =>
-      ListView(padding: padding, children: children);
+  Widget build(BuildContext context) => ListView(
+    padding: padding,
+    keyboardDismissBehavior: kIsWeb
+        ? ScrollViewKeyboardDismissBehavior.onDrag
+        : null,
+    children: children,
+  );
 }
 
 Widget fullButton(String label, VoidCallback? action) => SizedBox(
@@ -250,71 +293,184 @@ class TabsBar extends StatelessWidget {
   final ValueChanged<int> onChange;
 
   @override
-  Widget build(BuildContext context) => BottomAction(
-    child: Material(
-      color: ink,
-      borderRadius: BorderRadius.circular(34),
-      clipBehavior: Clip.antiAlias,
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: Row(
-          children: [
-            for (final (i, (icon, label, count)) in items.indexed)
-              Expanded(
-                child: Semantics(
-                  selected: i == index,
-                  button: true,
-                  label: label,
-                  child: InkWell(
-                    onTap: () => onChange(i),
-                    borderRadius: BorderRadius.circular(30),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: i == index ? yellow : ink,
-                      ),
-                      height: 51,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Badge(
-                            isLabelVisible: count > 0,
-                            label: Text('$count'),
-                            child: Icon(
-                              icon,
-                              size: 20,
-                              color: i == index ? ink : cream,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          Text(
-                            label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w800,
-                              color: i == index ? ink : cream,
-                            ),
-                          ),
-                        ],
+  Widget build(BuildContext context) {
+    final height = kIsWeb ? 55.0 : 51.0;
+    final animated = kIsWeb && !MediaQuery.disableAnimationsOf(context);
+    return BottomAction(
+      child: RepaintBoundary(
+        child: Material(
+          color: ink,
+          borderRadius: BorderRadius.circular(34),
+          clipBehavior: Clip.antiAlias,
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: SizedBox(
+              height: height,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  AnimatedAlign(
+                    alignment: Alignment(
+                      items.length > 1 ? 2 * index / (items.length - 1) - 1 : 0,
+                      0,
+                    ),
+                    duration: animated
+                        ? const Duration(milliseconds: 180)
+                        : Duration.zero,
+                    curve: Curves.easeOutCubic,
+                    child: FractionallySizedBox(
+                      widthFactor: 1 / items.length,
+                      heightFactor: 1,
+                      child: const DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: yellow,
+                          shape: StadiumBorder(),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Row(
+                    children: [
+                      for (final (i, (icon, label, count)) in items.indexed)
+                        Expanded(
+                          child: Semantics(
+                            selected: i == index,
+                            button: true,
+                            label: label,
+                            child: InkWell(
+                              onTap: () => onChange(i),
+                              borderRadius: BorderRadius.circular(30),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Badge(
+                                    isLabelVisible: count > 0,
+                                    label: Text('$count'),
+                                    child: Icon(
+                                      icon,
+                                      size: kIsWeb ? 21 : 20,
+                                      color: i == index ? ink : cream,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 2,
+                                    ),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        label,
+                                        style: TextStyle(
+                                          fontSize: kIsWeb ? 11 : 10,
+                                          fontWeight: FontWeight.w800,
+                                          color: i == index ? ink : cream,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
               ),
-          ],
+            ),
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Future<T?> openPage<T>(BuildContext context, Widget page) =>
-    Navigator.of(context).push<T>(MaterialPageRoute(builder: (_) => page));
+    Navigator.of(context).push<T>(
+      kIsWeb && MediaQuery.disableAnimationsOf(context)
+          ? PageRouteBuilder<T>(
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+              pageBuilder: (_, _, _) => page,
+            )
+          : MaterialPageRoute<T>(builder: (_) => page),
+    );
 
 void toast(BuildContext context, String text) =>
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+
+Widget unavailablePage(BuildContext context) => Scaffold(
+  appBar: AppBar(),
+  body: Center(
+    child: Text(context.tr('Запись недоступна', 'Бұл жазба қолжетімсіз')),
+  ),
+);
+
+String pilotMessage(BuildContext context, String code) => switch (code) {
+  'invalid_code' => context.tr(
+    'Код неверный или истёк',
+    'Код қате немесе мерзімі өтті',
+  ),
+  'demo_phone' => context.tr(
+    'Введите тестовый номер +7 700 000 00 XX',
+    '+7 700 000 00 XX сынақ нөмірін енгізіңіз',
+  ),
+  'sold_out' || 'stock_changed' => context.tr(
+    'Остаток изменился. Проверьте наличие.',
+    'Қалдық өзгерді. Қолжетімді санын тексеріңіз.',
+  ),
+  'pickup_missing' => context.tr(
+    'Активный заказ с этим кодом не найден',
+    'Бұл кодпен белсенді тапсырыс табылмады',
+  ),
+  'pickup_early' => context.tr(
+    'Время выдачи ещё не началось',
+    'Алып кету уақыты әлі басталмады',
+  ),
+  'invalid_pickup' => context.tr(
+    'Проверьте дату и время выдачи',
+    'Алып кету күні мен уақытын тексеріңіз',
+  ),
+  'order_closed' => context.tr('Заказ уже закрыт', 'Тапсырыс жабылған'),
+  'forbidden' || 'session_expired' || 'sign_in' => context.tr(
+    'Проверьте доступ и войдите снова',
+    'Құқығыңызды тексеріп, қайта кіріңіз',
+  ),
+  'rate_limit' => context.tr(
+    'Слишком много попыток. Повторите позже.',
+    'Әрекет тым көп. Кейін қайталап көріңіз.',
+  ),
+  'network' || 'sms_unavailable' => context.tr(
+    'Сервис временно недоступен. Повторите позже.',
+    'Қызмет уақытша қолжетімсіз. Кейін қайталап көріңіз.',
+  ),
+  'staff_conflict' => context.tr(
+    'Номер уже связан с другой ролью',
+    'Бұл нөмір басқа рөлге тіркелген',
+  ),
+  'listing_paused' => context.tr(
+    'Объявление приостановлено администратором',
+    'Жарияланымды әкімші тоқтатқан',
+  ),
+  _ => context.tr(
+    'Не удалось выполнить действие. Проверьте данные.',
+    'Әрекет орындалмады. Деректерді тексеріңіз.',
+  ),
+};
+
+Future<bool> pilotAction(
+  BuildContext context,
+  Future<void> Function() action,
+) async {
+  try {
+    await action();
+    return true;
+  } on PilotError catch (error) {
+    if (context.mounted) toast(context, pilotMessage(context, error.code));
+    return false;
+  }
+}
 
 Rect? shareOrigin(BuildContext context) {
   final object = context.findRenderObject();

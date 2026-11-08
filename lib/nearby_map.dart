@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -23,6 +24,17 @@ class NearbyMap extends StatefulWidget {
 class _NearbyMapState extends State<NearbyMap> {
   String? selectedId;
   bool tileFailed = false;
+  late final tileLayer = TileLayer(
+    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    userAgentPackageName: 'kz.toidym.toidym',
+    maxNativeZoom: 19,
+    panBuffer: 0,
+    errorTileCallback: (_, _, _) {
+      if (!tileFailed && mounted) {
+        setState(() => tileFailed = true);
+      }
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +69,7 @@ class _NearbyMapState extends State<NearbyMap> {
                       onTap: (_, _) => setState(() => selectedId = null),
                     ),
                     children: [
-                      TileLayer(
-                        urlTemplate:
-                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        userAgentPackageName: 'kz.toidym.toidym',
-                        maxNativeZoom: 19,
-                        panBuffer: 0,
-                        errorTileCallback: (_, _, _) {
-                          if (!tileFailed && mounted) {
-                            setState(() => tileFailed = true);
-                          }
-                        },
-                      ),
+                      tileLayer,
                       MarkerLayer(
                         markers: [
                           for (final items in groups.values)
@@ -150,6 +151,23 @@ class _NearbyMapState extends State<NearbyMap> {
                       ),
                     ],
                   ),
+                  if (kIsWeb)
+                    Positioned.fill(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          if (constraints.maxHeight < 150) {
+                            return const SizedBox.shrink();
+                          }
+                          return Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 28),
+                              child: selection(context, selected),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   if (tileFailed)
                     Positioned(
                       top: 8,
@@ -170,28 +188,28 @@ class _NearbyMapState extends State<NearbyMap> {
             ),
           ),
         ),
-        if (selected != null)
+        if (!kIsWeb)
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 2),
-            child: widget.selectedCard(selected),
-          )
-        else
-          Padding(
-            padding: const EdgeInsets.all(9),
-            child: Text(
-              widget.boxes.isEmpty
-                  ? context.tr(
-                      'Нет боксов по выбранным фильтрам',
-                      'Таңдалған сүзгі бойынша бокс жоқ',
-                    )
-                  : context.tr(
-                      'Нажмите на цену, чтобы открыть бокс',
-                      'Боксты ашу үшін бағасын басыңыз',
-                    ),
-              style: const TextStyle(color: muted, fontSize: 12),
-            ),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 2),
+            child: selection(context, selected),
           ),
       ],
     );
+  }
+
+  Widget selection(BuildContext context, FoodBox? selected) {
+    if (selected != null) return widget.selectedCard(selected);
+    final label = widget.boxes.isEmpty
+        ? context.tr(
+            'Нет боксов по выбранным фильтрам',
+            'Таңдалған сүзгі бойынша бокс жоқ',
+          )
+        : context.tr(
+            'Нажмите на цену, чтобы открыть бокс',
+            'Боксты ашу үшін бағасын басыңыз',
+          );
+    return kIsWeb
+        ? Tag(label, color: cream, textColor: muted)
+        : Text(label, style: const TextStyle(color: muted, fontSize: 12));
   }
 }

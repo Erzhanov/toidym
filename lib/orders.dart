@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'browse.dart';
+import 'admin.dart';
+import 'pilot_store.dart';
 import 'models.dart';
 import 'ui.dart';
 
@@ -21,6 +24,7 @@ class _SignInPageState extends State<SignInPage> {
   final phone = TextEditingController();
   final code = TextEditingController();
   bool verifying = false;
+  bool submitting = false;
 
   @override
   void dispose() {
@@ -29,110 +33,140 @@ class _SignInPageState extends State<SignInPage> {
     super.dispose();
   }
 
-  void submit() {
-    if (!form.currentState!.validate()) return;
-    if (!verifying) {
+  Future<void> submit() async {
+    if (submitting || !form.currentState!.validate()) return;
+    final store = context.store;
+    final number = '+7${phone.text.trim()}';
+    setState(() => submitting = true);
+    final ok = await pilotAction(
+      context,
+      () => verifying
+          ? store.verifyCode(number, code.text)
+          : store.requestCode(number),
+    );
+    if (!mounted) return;
+    setState(() => submitting = false);
+    if (!ok) return;
+    if (verifying) {
+      Navigator.pop(context, true);
+    } else {
       setState(() => verifying = true);
-      return;
     }
-    context.store
-      ..phone = '+7 ${phone.text.trim()}'
-      ..save();
-    Navigator.pop(context, true);
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(context.tr('Вход', 'Кіру'), style: heading(22))),
-    body: Form(
-      key: form,
-      child: PageBody(
-        children: [
-          const Icon(Icons.phone_iphone, size: 50, color: ink),
-          const SizedBox(height: 20),
-          Text(
-            verifying
-                ? context.tr('Введите код', 'Кодты енгізіңіз')
-                : context.tr(
-                    'Вход по номеру телефона',
-                    'Телефон нөмірімен кіру',
-                  ),
-            style: heading(28),
-          ),
-          const SizedBox(height: 12),
-          if (verifying)
-            Panel(
-              color: pale,
-              child: Text(
-                context.tr(
-                  'Демо-код: 4821. SMS не отправляется.',
-                  'Демо код: 4821. SMS жіберілмейді.',
-                ),
-              ),
-            )
-          else
-            Text(
-              context.tr(
-                'Вход нужен, чтобы сохранять ваши брони. Для демо можно ввести тестовый номер.',
-                'Броньдарыңызды сақтау үшін кіріңіз. Демода сынақ нөмірін енгізуге болады.',
-              ),
-              style: const TextStyle(color: muted),
-            ),
-          const SizedBox(height: 16),
-          if (!verifying)
-            TextFormField(
-              key: const ValueKey('phone'),
-              controller: phone,
-              keyboardType: TextInputType.phone,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(10),
-              ],
-              decoration: InputDecoration(
-                prefixText: '+7 ',
-                labelText: context.tr('Номер телефона', 'Телефон нөмірі'),
-              ),
-              onFieldSubmitted: (_) => submit(),
-              validator: (value) => value?.length == 10
-                  ? null
-                  : context.tr('Введите 10 цифр', '10 цифр енгізіңіз'),
-            )
-          else
-            TextFormField(
-              key: const ValueKey('demo-code'),
-              controller: code,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(4),
-              ],
-              decoration: InputDecoration(
-                labelText: context.tr('Четырёхзначный код', 'Төрт таңбалы код'),
-              ),
-              onFieldSubmitted: (_) => submit(),
-              validator: (value) => value == '4821'
-                  ? null
-                  : context.tr('Проверьте демо-код', 'Демо кодты тексеріңіз'),
-            ),
-          const SizedBox(height: 16),
-          fullButton(
-            verifying
-                ? context.tr('Подтвердить', 'Растау')
-                : context.tr('Получить демо-код', 'Демо кодты алу'),
-            submit,
-          ),
-          if (verifying)
-            TextButton(
-              onPressed: () => setState(() {
-                code.clear();
-                verifying = false;
-              }),
-              child: Text(context.tr('Изменить номер', 'Нөмірді өзгерту')),
-            ),
-        ],
+  Widget build(BuildContext context) {
+    final store = context.store;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(context.tr('Вход', 'Кіру'), style: heading(22)),
       ),
-    ),
-  );
+      body: Form(
+        key: form,
+        child: PageBody(
+          children: [
+            const Icon(Icons.phone_iphone, size: 50, color: ink),
+            const SizedBox(height: 20),
+            Text(
+              verifying
+                  ? context.tr('Введите код', 'Кодты енгізіңіз')
+                  : context.tr(
+                      'Вход по номеру телефона',
+                      'Телефон нөмірімен кіру',
+                    ),
+              style: heading(28),
+            ),
+            const SizedBox(height: 12),
+            if (verifying)
+              Panel(
+                color: pale,
+                child: Text(
+                  store.demoAuth
+                      ? context.tr(
+                          'Демо-код: 4821. SMS не отправляется.',
+                          'Демо код: 4821. SMS жіберілмейді.',
+                        )
+                      : context.tr(
+                          'Введите код из SMS.',
+                          'SMS арқылы келген кодты енгізіңіз.',
+                        ),
+                ),
+              )
+            else
+              Text(
+                store.connected && store.demoAuth
+                    ? context.tr(
+                        'Тестовые номера +7 700 000 00 XX',
+                        'Сынақ нөмірлері +7 700 000 00 XX',
+                      )
+                    : context.tr(
+                        'Войдите, чтобы сохранять брони.',
+                        'Броньдарыңызды сақтау үшін кіріңіз.',
+                      ),
+                style: const TextStyle(color: muted),
+              ),
+            const SizedBox(height: 16),
+            if (!verifying)
+              TextFormField(
+                key: const ValueKey('phone'),
+                controller: phone,
+                enabled: !submitting,
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(10),
+                ],
+                decoration: InputDecoration(
+                  prefixText: '+7 ',
+                  labelText: context.tr('Номер телефона', 'Телефон нөмірі'),
+                ),
+                onFieldSubmitted: (_) => submit(),
+                validator: (value) => value?.length == 10
+                    ? null
+                    : context.tr('Введите 10 цифр', '10 цифр енгізіңіз'),
+              )
+            else
+              TextFormField(
+                key: const ValueKey('demo-code'),
+                controller: code,
+                enabled: !submitting,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(store.demoAuth ? 4 : 10),
+                ],
+                decoration: InputDecoration(
+                  labelText: context.tr('Код подтверждения', 'Растау коды'),
+                ),
+                onFieldSubmitted: (_) => submit(),
+                validator: (value) => (value?.length ?? 0) >= 4
+                    ? null
+                    : context.tr('Введите код', 'Кодты енгізіңіз'),
+              ),
+            const SizedBox(height: 16),
+            fullButton(
+              verifying
+                  ? context.tr('Подтвердить', 'Растау')
+                  : store.demoAuth
+                  ? context.tr('Получить демо-код', 'Демо кодты алу')
+                  : context.tr('Получить SMS', 'SMS код алу'),
+              submitting ? null : submit,
+            ),
+            if (verifying)
+              TextButton(
+                onPressed: submitting
+                    ? null
+                    : () => setState(() {
+                        code.clear();
+                        verifying = false;
+                      }),
+                child: Text(context.tr('Изменить номер', 'Нөмірді өзгерту')),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class CheckoutPage extends StatefulWidget {
@@ -145,10 +179,37 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   int quantity = 1;
   bool accepted = false;
+  bool submitting = false;
+  String? requestId;
+  bool retrying = false;
+
+  Future<void> confirm(FoodBox box) async {
+    final store = context.store;
+    final id = requestId ??=
+        'r-${DateTime.now().microsecondsSinceEpoch}-${Random.secure().nextInt(1 << 31)}';
+    setState(() => submitting = true);
+    try {
+      final order = await store.book(box.id, quantity, id);
+      if (!mounted) return;
+      if (order != null) {
+        Navigator.pop(context, order);
+      } else {
+        toast(context, pilotMessage(context, 'sold_out'));
+      }
+    } on PilotError catch (error) {
+      if (mounted) {
+        setState(() => retrying = error.code == 'network');
+        toast(context, pilotMessage(context, error.code));
+      }
+    } finally {
+      if (mounted) setState(() => submitting = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final box = context.store.box(widget.id)!;
+    final box = context.store.box(widget.id);
+    if (box == null) return unavailablePage(context);
     final available = box.published && box.stock >= quantity;
     return Scaffold(
       appBar: AppBar(
@@ -160,11 +221,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       bottomNavigationBar: BottomAction(
         child: fullButton(
           context.tr('Подтвердить бронь', 'Броньды растау'),
-          accepted && available
-              ? () {
-                  final order = context.store.reserve(box.id, quantity);
-                  if (order != null) Navigator.pop(context, order);
-                }
+          accepted && (available || retrying) && !submitting
+              ? () => confirm(box)
               : null,
         ),
       ),
@@ -185,7 +243,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   value: quantity,
                   min: 1,
                   max: box.stock,
-                  onChanged: (n) => setState(() => quantity = n),
+                  onChanged: (n) {
+                    if (submitting || retrying) return;
+                    setState(() {
+                      quantity = n;
+                      requestId = null;
+                    });
+                  },
                 ),
               ],
             ),
@@ -249,8 +313,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
             onChanged: (value) => setState(() => accepted = value ?? false),
             title: Text(
               context.tr(
-                'Заберу бокс в ${box.window}',
-                'Боксты ${box.window} аралығында аламын',
+                'Заберу бокс в ${context.pickupLabel(box)}',
+                'Боксты ${context.pickupLabel(box)} аралығында аламын',
               ),
             ),
             subtitle: Text(
@@ -499,7 +563,8 @@ class _OrderDetailState extends State<OrderDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final order = context.store.order(widget.id)!;
+    final order = context.store.order(widget.id);
+    if (order == null) return unavailablePage(context);
     final box = order.box;
     if (order.status == OrderStatus.collected) return Celebration(order: order);
     final reserved = order.status == OrderStatus.reserved;
@@ -617,7 +682,10 @@ class _OrderDetailState extends State<OrderDetail> {
                       ),
                     ) &&
                     context.mounted) {
-                  context.store.cancel(order);
+                  await pilotAction(
+                    context,
+                    () => context.store.cancelBooking(order),
+                  );
                 }
               },
               child: Text(context.tr('Отменить бронь', 'Броньды жою')),
@@ -676,7 +744,8 @@ class _CelebrationState extends State<Celebration> {
 
   @override
   Widget build(BuildContext context) {
-    final order = context.store.order(widget.order.id)!;
+    final order = context.store.order(widget.order.id);
+    if (order == null) return unavailablePage(context);
     return Scaffold(
       appBar: AppBar(title: Text(context.tr('Бокс получен', 'Бокс алынды'))),
       bottomNavigationBar: BottomAction(
@@ -712,8 +781,11 @@ class _CelebrationState extends State<Celebration> {
                     for (var i = 1; i <= 5; i++)
                       IconButton(
                         tooltip: context.tr('Оценка $i из 5', 'Баға 5-тен $i'),
-                        onPressed: () => context.store.updateOrder(
-                          order.copyWith(rating: i),
+                        onPressed: () => pilotAction(
+                          context,
+                          () => context.store.saveReview(
+                            order.copyWith(rating: i),
+                          ),
                         ),
                         icon: Icon(
                           i <= order.rating
@@ -731,13 +803,16 @@ class _CelebrationState extends State<Celebration> {
                       FilterChip(
                         selected: order.feedback.contains('$index'),
                         label: Text(context.tr(ru, kk)),
-                        onSelected: (selected) => context.store.updateOrder(
-                          order.copyWith(
-                            feedback: selected
-                                ? [...order.feedback, '$index']
-                                : order.feedback
-                                      .where((f) => f != '$index')
-                                      .toList(),
+                        onSelected: (selected) => pilotAction(
+                          context,
+                          () => context.store.saveReview(
+                            order.copyWith(
+                              feedback: selected
+                                  ? [...order.feedback, '$index']
+                                  : order.feedback
+                                        .where((f) => f != '$index')
+                                        .toList(),
+                            ),
                           ),
                         ),
                       ),
@@ -791,7 +866,8 @@ class _IssuePageState extends State<IssuePage> {
 
   @override
   Widget build(BuildContext context) {
-    final order = context.store.order(widget.id)!;
+    final order = context.store.order(widget.id);
+    if (order == null) return unavailablePage(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -805,16 +881,23 @@ class _IssuePageState extends State<IssuePage> {
           Panel(
             color: pale,
             child: Text(
-              context.tr(
-                'Демо: обращение сохраняется на этом устройстве.',
-                'Демо: шағым осы құрылғыда сақталады.',
-              ),
+              context.store.connected
+                  ? context.tr(
+                      'Обращение увидит администратор.',
+                      'Шағымды әкімші қарайды.',
+                    )
+                  : context.tr(
+                      'Демо: обращение сохраняется на этом устройстве.',
+                      'Демо: шағым осы құрылғыда сақталады.',
+                    ),
             ),
           ),
           const SizedBox(height: 12),
-          if (order.issue.isNotEmpty)
-            Panel(child: Text(order.issue))
-          else ...[
+          if (order.issue.isNotEmpty) ...[
+            Panel(child: Text(order.issue)),
+            if (order.resolution.isNotEmpty)
+              Panel(color: pale, child: Text(order.resolution)),
+          ] else ...[
             TextField(
               controller: controller,
               maxLines: 4,
@@ -829,8 +912,12 @@ class _IssuePageState extends State<IssuePage> {
               context.tr('Сохранить обращение', 'Шағымды сақтау'),
               controller.text.trim().isEmpty
                   ? null
-                  : () => context.store.updateOrder(
-                      order.copyWith(issue: controller.text.trim()),
+                  : () => pilotAction(
+                      context,
+                      () => context.store.submitIssue(
+                        order,
+                        controller.text.trim(),
+                      ),
                     ),
             ),
           ],
@@ -970,11 +1057,18 @@ class ProfilePage extends StatelessWidget {
                   onTap: onMerchant,
                 ),
               ),
+              if (store is PilotStore && store.admin)
+                Panel(
+                  padding: EdgeInsets.zero,
+                  child: ListTile(
+                    leading: const Icon(Icons.admin_panel_settings_outlined),
+                    title: Text(context.tr('Админ-панель', 'Админ панель')),
+                    onTap: () => openPage(context, AdminPage(store: store)),
+                  ),
+                ),
               if (store.signedIn)
                 TextButton(
-                  onPressed: () => store
-                    ..phone = ''
-                    ..save(),
+                  onPressed: store.signOut,
                   child: Text(context.tr('Выйти', 'Шығу')),
                 ),
             ],

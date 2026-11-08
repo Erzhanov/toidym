@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart' show CupertinoSlidingSegmentedControl;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -139,10 +141,12 @@ class LanguageChoice extends StatelessWidget {
 Future<int?> chooseDistrict(BuildContext context) => showModalBottomSheet<int>(
   context: context,
   showDragHandle: true,
+  sheetAnimationStyle: kIsWeb && MediaQuery.disableAnimationsOf(context)
+      ? AnimationStyle.noAnimation
+      : null,
   builder: (context) => SafeArea(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    child: ListView(
+      shrinkWrap: true,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
@@ -229,6 +233,20 @@ class _BrowsePageState extends State<BrowsePage> {
     ];
 
     final catalogHeader = <Widget>[
+      if (store.connected && !store.online)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: OutlinedButton.icon(
+            onPressed: store.refresh,
+            icon: const Icon(Icons.refresh),
+            label: Text(
+              context.tr(
+                'Обновить каталог с сервера',
+                'Каталогты серверден жаңарту',
+              ),
+            ),
+          ),
+        ),
       if (showIntro && query.isEmpty)
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 7),
@@ -337,7 +355,7 @@ class _BrowsePageState extends State<BrowsePage> {
                 children: [
                   Row(
                     children: [
-                      const Brand(),
+                      const Brand(width: kIsWeb ? 72 : 62),
                       const SizedBox(width: 9),
                       Expanded(
                         child: TextButton.icon(
@@ -397,6 +415,36 @@ class _BrowsePageState extends State<BrowsePage> {
                     onChanged: (_) => setState(() {}),
                     textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
+                      contentPadding: kIsWeb
+                          ? const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 15,
+                            )
+                          : null,
+                      border: kIsWeb
+                          ? const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(28),
+                              ),
+                              borderSide: BorderSide.none,
+                            )
+                          : null,
+                      enabledBorder: kIsWeb
+                          ? const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(28),
+                              ),
+                              borderSide: BorderSide.none,
+                            )
+                          : null,
+                      focusedBorder: kIsWeb
+                          ? const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(28),
+                              ),
+                              borderSide: BorderSide(color: yellow, width: 2),
+                            )
+                          : null,
                       hintText: context.tr(
                         'Заведения и боксы',
                         'Кафелер мен бокстар',
@@ -425,6 +473,9 @@ class _BrowsePageState extends State<BrowsePage> {
             children: [
               ListView.builder(
                 padding: const EdgeInsets.fromLTRB(0, 15, 0, 8),
+                keyboardDismissBehavior: kIsWeb
+                    ? ScrollViewKeyboardDismissBehavior.onDrag
+                    : null,
                 itemCount: catalogHeader.length + boxes.length,
                 itemBuilder: (context, index) {
                   if (index < catalogHeader.length) return catalogHeader[index];
@@ -509,16 +560,49 @@ class _BrowsePageState extends State<BrowsePage> {
                 style: heading(25),
               ),
             ),
-            OutlinedButton.icon(
-              onPressed: widget.onToggle,
-              icon: Icon(
-                widget.showMap ? Icons.list : Icons.map_outlined,
-                size: 17,
+            if (kIsWeb)
+              CupertinoSlidingSegmentedControl<bool>(
+                groupValue: widget.showMap,
+                backgroundColor: Colors.white,
+                thumbColor: ink,
+                padding: const EdgeInsets.all(3),
+                onValueChanged: (value) {
+                  if (value != null && value != widget.showMap) {
+                    widget.onToggle();
+                  }
+                },
+                children: {
+                  for (final (showMap, label) in [
+                    (false, context.tr('Список', 'Тізім')),
+                    (true, context.tr('Карта', 'Карта')),
+                  ])
+                    showMap: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                        vertical: 5,
+                      ),
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          color: widget.showMap == showMap ? cream : ink,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                },
+              )
+            else
+              OutlinedButton.icon(
+                onPressed: widget.onToggle,
+                icon: Icon(
+                  widget.showMap ? Icons.list : Icons.map_outlined,
+                  size: 17,
+                ),
+                label: Text(
+                  widget.showMap ? context.tr('Список', 'Тізім') : 'Карта',
+                ),
               ),
-              label: Text(
-                widget.showMap ? context.tr('Список', 'Тізім') : 'Карта',
-              ),
-            ),
           ],
         ),
       ),
@@ -630,7 +714,7 @@ class CompactBox extends StatelessWidget {
               style: heading(15),
             ),
             Text(
-              '${box.window} · ${box.distance} ${context.tr('км', 'км')}',
+              '${context.pickupLabel(box)}${box.distance.isEmpty ? '' : ' · ${box.distance} км'}',
               style: const TextStyle(color: muted, fontSize: 12),
             ),
             const SizedBox(height: 4),
@@ -717,9 +801,28 @@ class BoxRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 13, color: muted),
                   ),
-                  Text(
-                    '${box.window} · ${box.distance} км · ★ ${box.rating}',
+                  DefaultTextStyle(
                     style: const TextStyle(fontSize: 11, color: muted),
+                    child: Wrap(
+                      spacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        Text(
+                          '${context.pickupLabel(box)}${box.distance.isEmpty ? '' : ' · ${box.distance} км'}',
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.star_rounded,
+                              size: 12,
+                              color: muted,
+                            ),
+                            Text(box.rating),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Prices(box: box),
@@ -852,8 +955,8 @@ class BoxDetail extends StatelessWidget {
               children: [
                 Text(
                   context.tr(
-                    'Самовывоз · ${box.window}',
-                    'Алып кету · ${box.window}',
+                    'Самовывоз · ${context.pickupLabel(box)}',
+                    'Алып кету · ${context.pickupLabel(box)}',
                   ),
                   style: heading(19),
                 ),
