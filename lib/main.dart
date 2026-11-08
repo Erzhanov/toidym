@@ -42,7 +42,7 @@ class _ToidymAppState extends State<ToidymApp> {
   Widget build(BuildContext context) => ValueListenableBuilder<bool>(
     valueListenable: widget.store.language,
     builder: (context, kazakh, _) => MaterialApp(
-      title: 'toıdym',
+      title: appName,
       debugShowCheckedModeBanner: false,
       locale: Locale(kazakh ? 'kk' : 'ru'),
       supportedLocales: const [Locale('kk'), Locale('ru')],

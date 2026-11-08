@@ -393,7 +393,7 @@ class AppStore extends ChangeNotifier {
             FlutterErrorDetails(
               exception: error,
               stack: stack,
-              library: 'toıdym storage',
+              library: 'Toidym storage',
             ),
           ),
         );

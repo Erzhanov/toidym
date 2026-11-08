@@ -1,4 +1,4 @@
-"""Shared API and static Flutter host for the toıdym pilot."""
+"""Shared API and static Flutter host for the Toidym pilot."""
 
 import argparse
 import base64
@@ -634,7 +634,7 @@ def main():
     except ValueError as error:
         parser.error(str(error))
     with ThreadingHTTPServer((args.host, args.port), handler_for(pilot)) as server:
-        print(f'toidym {"demo" if args.demo else "pilot"}: http://{args.host}:{args.port}', flush=True)
+        print(f'Toidym {"demo" if args.demo else "pilot"}: http://{args.host}:{args.port}', flush=True)
         server.serve_forever()
 
 

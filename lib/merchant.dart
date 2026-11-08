@@ -713,7 +713,7 @@ class _NewBoxPageState extends State<NewBoxPage> {
           ),
           field(
             price,
-            context.tr('Цена toıdym, ₸', 'toıdym бағасы, ₸'),
+            context.tr('Цена $appName, ₸', '$appName бағасы, ₸'),
             numeric: true,
           ),
           Panel(

@@ -827,8 +827,8 @@ class _CelebrationState extends State<Celebration> {
             onPressed: () => SharePlus.instance.share(
               ShareParams(
                 text: context.tr(
-                  'Ас болсын! С toıdym я сэкономил(а) ${money(order.savings)}.',
-                  'Ас болсын! toıdym арқылы ${money(order.savings)} үнемдедім.',
+                  'Ас болсын! С $appName я сэкономил(а) ${money(order.savings)}.',
+                  'Ас болсын! $appName арқылы ${money(order.savings)} үнемдедім.',
                 ),
                 sharePositionOrigin: shareOrigin(context),
               ),

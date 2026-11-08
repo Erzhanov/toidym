@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'models.dart';
 
+const appName = 'Toidym';
 const ink = Color(0xff2B2350);
 const muted = Color(0xff5A527A);
 const cream = Color(0xffFFF5DF);
@@ -193,13 +193,38 @@ class Tag extends StatelessWidget {
 }
 
 class Brand extends StatelessWidget {
-  const Brand({super.key, this.width = 62});
+  const Brand({super.key, this.width = 96});
   final double width;
   @override
-  Widget build(BuildContext context) => SvgPicture.asset(
-    'assets/logo.svg',
-    width: width,
-    semanticsLabel: 'toıdym',
+  Widget build(BuildContext context) => Semantics(
+    label: appName,
+    excludeSemantics: true,
+    child: SizedBox(
+      width: width,
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(width * 0.08),
+            child: Image.asset(
+              'assets/app-icon.png',
+              width: width * 0.33,
+              height: width * 0.33,
+            ),
+          ),
+          SizedBox(width: width * 0.06),
+          Expanded(
+            child: FittedBox(
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.scaleDown,
+              child: Text(
+                appName,
+                style: heading(width * 0.21).copyWith(color: cream),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
   );
 }
 

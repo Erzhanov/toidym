@@ -355,7 +355,7 @@ class _BrowsePageState extends State<BrowsePage> {
                 children: [
                   Row(
                     children: [
-                      const Brand(width: kIsWeb ? 72 : 62),
+                      const Brand(),
                       const SizedBox(width: 9),
                       Expanded(
                         child: TextButton.icon(
@@ -382,6 +382,8 @@ class _BrowsePageState extends State<BrowsePage> {
                               Flexible(
                                 child: Text(
                                   'Астана · ${context.districtName(store.district)}',
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
