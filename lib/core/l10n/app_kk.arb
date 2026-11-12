@@ -1,0 +1,718 @@
+{
+  "@@locale": "kk",
+  "appName": "toıdym",
+  "brandPhrase": "Ас болсын!",
+  "brandSlogan": "Дәмді тағамды −70%-ға дейін құтқар",
+  "qyzylKitapTitle": "Қызыл кітап",
+  "qumbekName": "Құмбек",
+  "languageRu": "Русский",
+  "languageKk": "Қазақша",
+  "languageTitle": "Қосымша тілі",
+
+  "navBoxes": "Бокстар",
+  "navMap": "Карта",
+  "navOrders": "Тапсырыстар",
+  "navProfile": "Профиль",
+  "navVenueBoxes": "Бокстар",
+  "navVenuePickup": "Беру",
+  "navVenueStats": "Қорытынды",
+
+  "districtEsil": "Есіл",
+  "districtAlmaty": "Алматы",
+  "districtSaryarka": "Сарыарқа",
+  "districtBaiqonyr": "Байқоңыр",
+  "districtAllAstana": "Бүкіл Астана",
+  "cityAstana": "Астана",
+
+  "categoryAll": "Барлығы",
+  "categoryBakery": "Нан-тоқаш",
+  "categoryHotFood": "Ыстық тағам",
+  "categoryHalal": "Халал",
+  "categoryCoffee": "Кофе",
+  "categoryGrocery": "Дүкен",
+
+  "badgeHalal": "Халал",
+  "badgeEndingSoon": "Таусылуға жақын",
+  "badgeLeftCount": "Қалғаны: {count}",
+  "@badgeLeftCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "badgeSoldOut": "Таусылды",
+  "pickupToday": "Бүгін алу: {window}",
+  "@pickupToday": {
+    "placeholders": {
+      "window": { "type": "String" }
+    }
+  },
+  "distanceKm": "{value} км",
+  "@distanceKm": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+  "distanceMeters": "{value} м",
+  "@distanceMeters": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "reviewsCountShort": "({count})",
+  "@reviewsCountShort": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "boxesWaitingCount": "Жаныңызда {count} бокс күтуде",
+  "@boxesWaitingCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "actionStart": "Бастау",
+  "actionRepresentVenue": "Мен мекеме өкілімін",
+  "actionRetry": "Қайталау",
+  "actionReserveFor": "{price} бағасына брондау",
+  "@actionReserveFor": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "actionPayAmount": "{price} төлеу",
+  "@actionPayAmount": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "actionLogin": "Кіру",
+  "actionLogout": "Шығу",
+  "actionDone": "Дайын",
+  "actionCancel": "Болдырмау",
+  "actionSave": "Сақтау",
+  "actionNext": "Келесі",
+  "actionBack": "Артқа",
+  "actionShare": "Бөлісу",
+  "actionDetails": "Толығырақ",
+  "actionRoute": "Бағыт",
+  "actionCall": "Қоңырау шалу",
+  "actionResetFilters": "Сүзгіні тазалау",
+  "actionAddToFavorites": "Таңдаулыларға қосу",
+  "actionRemoveFromFavorites": "Таңдаулылардан өшіру",
+  "actionSwitchToVenue": "Мекеме режимі",
+  "actionSwitchToBuyer": "Сатып алушы",
+  "actionBecomePartner": "Серіктес болу",
+
+  "stateErrorTitle": "Жүктеу мүмкін болмады",
+  "stateErrorSubtitle": "Байланысты тексеріп, қайта көріңіз",
+  "stateEmptyBoxesTitle": "Жақын маңда бокстар әзірге жоқ",
+  "stateEmptyBoxesSubtitle": "Құмбек жаңа ұсыныстар іздеп жатыр — сәл кейінірек кіріңіз немесе сүзгіні ауыстырыңыз",
+
+  "onboardingLocationTitle": "Бокстарды қайдан құтқарамыз?",
+  "onboardingLocationSubtitle": "Геолокацияға рұқсат беріңіз немесе Астана ауданын таңдаңыз — аккаунт әзірше қажет емес",
+  "onboardingDetectLocation": "Геолокацияны анықтау",
+  "onboardingLocationDetected": "Анықталды: Астана, {district}",
+  "@onboardingLocationDetected": {
+    "placeholders": {
+      "district": { "type": "String" }
+    }
+  },
+  "onboardingOrChooseDistrict": "Немесе ауданды қолмен таңдаңыз",
+
+  "homeGreeting": "Сәлем! Бүгін не құтқарамыз?",
+  "homeGreetingNamed": "Сәлем, {name}! Бокс таңдаңыз",
+  "@homeGreetingNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeSearchHint": "Бокс немесе мекеме іздеу",
+  "homeViewList": "Тізім",
+  "homeViewMap": "Картада",
+  "homeNotificationsTitle": "Хабарламалар",
+  "homeMarkAllRead": "Барлығын оқу",
+  "homeEndingSoonSection": "Таусылуға жақын",
+  "homeAllBoxesSection": "Барлық ұсыныстар",
+  "homeSimulateError": "Қате экранын тексеру",
+
+  "mapYouAreHere": "Сіз осындасыз",
+  "mapCenterOnMe": "Орталықтау",
+  "mapOpenInList": "Тізіммен",
+
+  "boxDetailSurpriseTitle": "Ішінде әдетте не болады",
+  "boxDetailSurpriseDisclaimer": "Құрамы күн соңында қалған тағамға байланысты. Сипаттамаға сәйкес келмесе — алар кезде бас тартуға болады.",
+  "boxDetailAllergensTitle": "Аллергендер",
+  "boxDetailAllergensEmpty": "Негізгі аллергендер көрсетілмеген",
+  "boxDetailAllergensNote": "Аллергия болса, алмас бұрын құрамын сол жерде нақтылаңыз.",
+  "boxDetailPickupOnlyBadge": "Тек өзіңіз алып кетесіз",
+  "boxDetailReviewsTitle": "Қонақтардың пікірлері",
+  "boxDetailShareMessage": "toıdym арқылы {venue} мекемесінен «{title}» боксын {price} бағасына құтқарып жатырмын!",
+  "@boxDetailShareMessage": {
+    "placeholders": {
+      "title": { "type": "String" },
+      "venue": { "type": "String" },
+      "price": { "type": "String" }
+    }
+  },
+  "boxDetailRouteOpening": "{address} (Астана) мекенжайына бағыт: {lat}, {lng}",
+  "@boxDetailRouteOpening": {
+    "placeholders": {
+      "address": { "type": "String" },
+      "lat": { "type": "String" },
+      "lng": { "type": "String" }
+    }
+  },
+
+  "authPhoneTitle": "Боксты құтқару үшін кіріңіз",
+  "authPhoneSubtitle": "Тапсырысты растау үшін SMS арқылы қысқа код жібереміз",
+  "authPhoneLabel": "Телефон нөмірі",
+  "authPhoneHint": "+7 (777) 123-45-67",
+  "authSendCode": "Код алу",
+  "authSmsTitle": "SMS кодын енгізіңіз",
+  "authSmsSubtitle": "{phone} нөміріне 4 таңбалы код жібердік",
+  "@authSmsSubtitle": {
+    "placeholders": {
+      "phone": { "type": "String" }
+    }
+  },
+  "authSmsHint": "4 таңбалы кодты енгізіңіз (демо: 1234)",
+  "authConfirmCode": "Растау",
+  "authChangePhone": "Нөмірді өзгерту",
+  "authInvalidCode": "Код қате. Демо үшін 1234 қолданыңыз",
+  "guestBenefitsTitle": "Аккаунтқа кіріңіз",
+  "guestBenefitsSubtitle": "Сүйікті орындарды сақтап, бокстар жинаңыз және «Қызыл кітап» тұрғындарын ашыңыз",
+  "guestBenefitOrders": "Барлық тапсырыстар тарихы және QR-ға жылдам қол жеткізу",
+  "guestBenefitStats": "Құтқарылған тағам килограмын және үнемді есептеу",
+  "guestBenefitKitap": "Сирек кездесетін жануарлар жинағы — «Қызыл кітап»",
+
+  "paymentQuantityLabel": "Бокс саны",
+  "paymentMethodTitle": "Төлем тәсілі",
+  "paymentKaspi": "Kaspi.kz",
+  "paymentKaspiHint": "Шот Kaspi қосымшасына келеді",
+  "paymentCard": "Банк картасы",
+  "paymentCardNumberLabel": "Карта нөмірі",
+  "paymentCardExpiryLabel": "Мерзімі (АА/ЖЖ)",
+  "paymentCardCvvLabel": "CVV",
+  "paymentCardInvalid": "Карта деректерін тексеріңіз",
+  "paymentRegularPrice": "Әдеттегі баға",
+  "paymentYouSave": "Сіздің үнеміңіз",
+  "paymentTotal": "Барлығы",
+  "paymentRuleRefund": "Егер мекеме боксты болдырмаса, бронь айыппұлсыз жойылады (Strike берілмейді).",
+  "paymentRuleCharity": "1 сағат бұрын болдырмай келмесеңіз — Strike беріледі (3 Strike = 30 күнге бұғаттау).",
+  "paymentSimulateError": "Демо: брондау қатесін көрсету",
+  "paymentProcessing": "Брондау рәсімделуде...",
+
+  "orderTitle": "Тапсырыс {number}",
+  "@orderTitle": {
+    "placeholders": {
+      "number": { "type": "String" }
+    }
+  },
+  "orderShowQrHint": "Кассада QR көрсетіңіз немесе кодты айтыңыз",
+  "orderPinLabel": "Алу коды",
+  "orderCountdownBefore": "Беруге дейін {time}",
+  "@orderCountdownBefore": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderCountdownDuring": "Беру уақыты ашық · қалғаны {time}",
+  "@orderCountdownDuring": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderCountdownEnded": "Беру уақыты аяқталды",
+  "orderCancelButton": "Тапсырысты болдырмау",
+  "orderCancelBlockedHint": "Болдырмау беру басталуына кемінде 1 сағат қалғанда ғана мүмкін",
+  "orderCancelConfirmTitle": "Тапсырысты болдырмау?",
+  "orderCancelConfirmBody": "Бокс басқа сатып алушыларға қолжетімді болады, Strike берілмейді.",
+  "orderProblemButton": "Тапсырыспен мәселе бар",
+  "orderDemoCompletePickup": "Демо: мекеме тапсырысты берді",
+  "orderCallDialogTitle": "Мекемеге қоңырау шалу",
+  "orderCallDialogBody": "Байланыс нөмірі: {phone}",
+  "@orderCallDialogBody": {
+    "placeholders": {
+      "phone": { "type": "String" }
+    }
+  },
+
+  "complaintTitle": "Тапсырыспен мәселе",
+  "complaintSubtitle": "Не дұрыс болмағанын жазыңыз. Шағым алғаннан кейін 24 сағат ішінде қабылданады, жауап — 3 жұмыс күніне дейін.",
+  "complaintNoteHint": "Мысалы: құрамы сипаттамадан қатты өзгеше болды немесе өнім жарамсыз",
+  "complaintAddPhoto": "Фото тіркеу",
+  "complaintPhotoAdded": "Фото тіркелді",
+  "complaintSubmit": "Шағым жіберу",
+  "complaintSubmittedToast": "Шағым қабылданды. 3 жұмыс күні ішінде жауап береміз",
+  "complaintAlreadySent": "Бұл тапсырыс бойынша шағым жіберілген",
+
+  "successSavedSubtitle": "Сіз бокс құтқарып, {amount} үнемдедіңіз",
+  "@successSavedSubtitle": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "successRateTitle": "Бокс қалай болды?",
+  "successTagTasty": "Дәмді",
+  "successTagPlenty": "Тағам көп",
+  "successTagFresh": "Жаңа піскен",
+  "successTagPolite": "Сыпайы",
+  "successCommentHint": "Мекемеге бір-екі ауыз сөз (міндетті емес)",
+  "successShareStories": "Стористе бөлісу",
+  "successStoriesTitle": "Сториске арналған ашық хат",
+  "successStoriesSaved": "Ашық хат сториске көшірілді!",
+
+  "ordersTabActive": "Белсенді",
+  "ordersTabPast": "Өткен",
+  "ordersEmptyActiveTitle": "Белсенді тапсырыстар жоқ",
+  "ordersEmptyActiveSubtitle": "Кешке дәмді бокс таңдап, кезексіз алып кетіңіз",
+  "ordersEmptyPastTitle": "Өткен тапсырыстар әзірше жоқ",
+  "ordersEmptyPastSubtitle": "Мұнда құтқарылған бокстарыңыздың тарихы сақталады",
+  "ordersOpenQr": "QR ашу",
+  "orderStatusPaid": "Төленді",
+  "orderStatusReady": "Беруге дайын",
+  "orderStatusPickedUp": "Алынды",
+  "orderStatusCancelled": "Болдырылмады",
+  "orderStatusExpired": "Уақыты өтті",
+
+  "profileBoxesSaved": "Құтқарылған бокс",
+  "profileKgSaved": "Қалдыққа кетпеді",
+  "profileMoneySaved": "Үнемделді",
+  "profileFavoritesTitle": "Таңдаулылар",
+  "profileFavoritesEmpty": "Сүйікті мекемені жоғалтпау үшін жүрекшені басыңыз",
+  "profileFavoriteAlerts": "Сүйікті орындардағы бокстар",
+  "profileFavoriteAlertsSubtitle": "Сүйікті орындар бокс шығарғанда еске салу",
+  "profileCharityTitle": "Қорға арналған бокс",
+  "profileCharitySubtitle": "Боксты төлеңіз — біз оны Астанадағы қайырымдылық қорына жеткіземіз",
+  "profileCharityConfirm": "Қорға бокс сыйлау",
+  "profileCharitySuccess": "Рахмет! Сіз қорға арналған боксты төледіңіз",
+  "profileRoleDemoTitle": "Жүйе рөлдері мен панельдер",
+  "profileRoleBuyer": "Сатып алушы",
+  "profileRoleOwner": "Дүкен иесі",
+  "profileRoleCashier": "Кассир",
+  "profileRoleAdmin": "Әкімші",
+  "actionSwitchToAdmin": "Админ-панель",
+  "actionOpenAdminDemo": "Админ-панель",
+
+  "navAdminOverview": "Шолу",
+  "navAdminVenues": "Дүкендер",
+  "navAdminBoxes": "Бокстар",
+  "navAdminComplaints": "Шағымдар",
+
+  "screenAdminOverviewTitle": "Админ-панель · Шолу",
+  "screenAdminVenuesTitle": "Дүкендер және Халал",
+  "screenAdminBoxesTitle": "Бокстар каталогы",
+  "screenAdminComplaintsTitle": "Шағымдар мен тапсырыстар",
+
+  "adminGmvLabel": "Айналым (GMV)",
+  "adminCommissionLabel": "Комиссия 15%",
+  "adminVenuesCountLabel": "Дүкендер",
+  "adminOpenComplaintsLabel": "Ашық шағымдар",
+  "adminPendingQueueTitle": "Тексеруді күтуде",
+  "adminRecentOrdersTitle": "Соңғы тапсырыстар",
+
+  "adminFilterAll": "Барлығы",
+  "adminFilterPending": "Тексеруде",
+  "adminFilterApproved": "Мақұлданған",
+  "adminFilterRejected": "Қайтарылған",
+
+  "adminApproveVenue": "Дүкенді мақұлдау",
+  "adminRejectVenue": "Түзетуге жіберу",
+  "adminVerifyHalal": "Халалды растау",
+  "adminRejectHalal": "Халалды қабылдамау",
+  "adminHalalStatusVerified": "Халал расталды",
+  "adminHalalStatusPending": "Халал тексерілуде",
+  "adminHalalStatusRejected": "Халал қабылданбады",
+  "adminHalalStatusNone": "Халал жоқ",
+  "adminRejectReasonHint": "Дүкенге ескерту жазыңыз",
+
+  "adminHideBox": "Жариялаудан алу",
+  "adminRestoreBox": "Сатылымға қайтару",
+  "adminBoxStatusActive": "Белсенді",
+  "adminBoxStatusSoldOut": "Таусылды",
+  "adminBoxStatusDisabled": "Жасырулы",
+
+  "adminComplaintsTab": "Шағымдар",
+  "adminAllOrdersTab": "Барлық тапсырыстар",
+  "adminComplaintTakeInReview": "Қарауға алу",
+  "adminComplaintRefund": "Қайтарыммен шешу",
+  "adminComplaintResolve": "Жауаппен жабу",
+  "adminComplaintResolutionHint": "Сатып алушыға жауап (3 жұмыс күніне дейін)",
+  "adminComplaintStatusOpen": "Ашық",
+  "adminComplaintStatusInReview": "Қаралуда",
+  "adminComplaintStatusResolved": "Шешілді",
+  "adminComplaintStatusRefunded": "Қайтарым жасалды",
+  "adminNoComplaintsTitle": "Ашық шағымдар жоқ",
+  "adminNoComplaintsSubtitle": "Сатып алушылардың барлық өтініші қаралды",
+
+  "venueModerationPendingBanner": "Дүкен тексерілуде: бокстар әкімші мақұлдаған соң сатып алушыларға көрінеді.",
+  "venueModerationRejectedBanner": "Өтінім түзетуді қажет етеді",
+  "venueSettingsHalalNumber": "Халал сертификат нөмірі",
+  "venueSettingsSubmitHalal": "Халал тексеруге жіберу",
+
+  "animalQumbek": "Құмбек",
+  "animalIrbis": "Барыс",
+  "animalSaigak": "Ақбөкен",
+  "animalSeal": "Итбалық",
+  "qyzylKitapProgress": "{target} бокстың {saved}-і — тағы {left}, сонда {animal} ашылады",
+  "@qyzylKitapProgress": {
+    "placeholders": {
+      "saved": { "type": "int" },
+      "target": { "type": "int" },
+      "left": { "type": "int" },
+      "animal": { "type": "String" }
+    }
+  },
+  "qyzylKitapAllUnlocked": "«Қызыл кітаптың» барлық тұрғыны ашылды! Сіз күн сайын тағамды құтқарасыз.",
+  "qyzylKitapUnlocked": "Ашылды",
+  "qyzylKitapLockedLeft": "тағы {count} бокс",
+  "@qyzylKitapLockedLeft": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "qyzylKitapNoMoneyNote": "Жинақ тағамды құтқаруға қосқан үлесіңізді көрсетеді — бонустар ақшаға айырбасталмайды.",
+
+  "venueOnboardingStep1": "Мекеме",
+  "venueOnboardingStep2": "Мекенжай мен уақыт",
+  "venueOnboardingStep3": "Деректемелер",
+  "venueOnboardingStep4": "Шарт",
+  "venueNameLabel": "Мекеме атауы",
+  "venueAddressLabel": "Астанадағы мекенжайы",
+  "venuePhoneLabel": "Байланыс телефоны",
+  "venueBinLabel": "БСН / ЖСН",
+  "venueIbanLabel": "ЖСК (IBAN)",
+  "venueBikLabel": "БСК",
+  "venueContractText": "toıdym серіктестік оферта шарты: сатылған бокстардан 15% комиссия, дүйсенбі сайын апталық төлем. Қолма-қол есеп айырысуға және тыйым салынған тауарларды сатуға болмайды.",
+  "venueContractAgree": "Оферта шартының талаптарымен келісемін",
+  "venueSubmitApplication": "Өтінім жіберу",
+  "venueStatusPending": "Тексеруде",
+  "venueStatusApproved": "Мақұлданды",
+  "venueStatusRejected": "Түзету қажет",
+  "venueDemoStatusSwitch": "Өтінімнің демо-мәртебесі",
+  "venueOpenDashboard": "Кабинетке өту",
+
+  "venueTodaySold": "Сатылды",
+  "venueTodayWaiting": "Алуды күтуде",
+  "venueTodayRevenue": "Түсім",
+  "venueQumbekTip": "Бокстарды 16:00-ге дейін жариялаңыз — сатып алушылар кешке дейін көріп үлгереді",
+  "venueInSale": "Сатылымда",
+  "venueStockLabel": "Қалдығы",
+  "venueNewBoxButton": "Жаңа бокс",
+
+  "venueNewBoxTitleField": "Бокс атауы",
+  "venueNewBoxType": "Бокс түрі",
+  "venueNewBoxSurprise": "Сюрприз-бокс",
+  "venueNewBoxSet": "Нақты жиынтық",
+  "venueNewBoxInside": "Ішінде не болуы мүмкін",
+  "venueNewBoxOriginalPrice": "Әдеттегі бағасы (₸)",
+  "venueNewBoxDiscountPrice": "toıdym бағасы (₸)",
+  "venueNewBoxAutoDiscount": "Жеңілдік: {percent}%",
+  "@venueNewBoxAutoDiscount": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "venueNewBoxLowDiscountWarn": "Жеңілдік 50%-дан аз — жариялауға болмайды",
+  "venueNewBoxYouReceive": "Бокстан алатыныңыз: {amount}",
+  "@venueNewBoxYouReceive": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "venueNewBoxQuantity": "Бокс саны",
+  "venueNewBoxWindowStart": "Беру басталуы",
+  "venueNewBoxWindowEnd": "Беру аяқталуы",
+  "venueNewBoxRepeatDays": "Апта күндері бойынша қайталау",
+  "venueNewBoxAllergens": "Аллергендер",
+  "venueNewBoxPreviewButton": "Алдын ала көру",
+  "venueNewBoxPublishButton": "Жариялау",
+  "venueNewBoxHalalNoCertHint": "Баптауларда халал-сертификатты жүктеп растаңыз",
+
+  "venuePickupScannerHint": "Камераны сатып алушының QR-ына бағыттаңыз",
+  "venuePickupSimulateQr": "Демо: бірінші тапсырыстың QR-ын сканерлеу",
+  "venuePickupPinHint": "4 таңбалы код",
+  "venuePickupGiveButton": "Тапсырысты беру",
+  "venuePickupWaitingTitle": "Алуды күтуде",
+  "venuePickupEmptyWaiting": "Беруді күтіп тұрған тапсырыстар жоқ",
+  "venuePickupSuccess": "{number} тапсырысы берілді!",
+  "@venuePickupSuccess": {
+    "placeholders": {
+      "number": { "type": "String" }
+    }
+  },
+  "venuePickupCancelTitle": "Тапсырысты болдырмау",
+  "venuePickupCancelReasonHint": "Себебі (ақша сатып алушыға автоматты түрде қайтарылады)",
+
+  "venueStatsDay": "Күн",
+  "venueStatsWeek": "Апта",
+  "venueStatsMonth": "Ай",
+  "venueStatsFoodSaved": "Құтқарылған тағам",
+  "venueStatsCommission": "Комиссия",
+  "venueStatsNextPayout": "Келесі төлем",
+  "venueStatsPayoutHistory": "Төлемдер тарихы",
+  "venueStatsReviews": "Рейтинг және пікірлер",
+
+  "venueSettingsWorkHours": "Жұмыс уақыты",
+  "venueSettingsStaff": "Қызметкерлер",
+  "venueSettingsAddCashier": "Кассир қосу",
+  "venueSettingsCashierName": "Кассир есімі",
+  "venueSettingsSupport": "Серіктестерді қолдау",
+  "venueSettingsSupportText": "Telegram @toidym_partner · +7 (7172) 55-00-11",
+
+  "ruleDiscountTooLow": "Жеңілдік кемінде 50% болуы керек",
+  "ruleWindowTooShort": "Беру уақыты кемінде 30 минут болуы тиіс",
+  "ruleWindowOutsideHours": "Беру уақыты мекеменің жұмыс уақытында болуы керек",
+  "rulePublishTooLate": "Боксты беру басталуынан кемінде 2 сағат бұрын жариялау қажет",
+  "ruleHalalCertRequired": "«Халал» белгісі тек тексерілген сертификатпен қойылады",
+  "ruleProhibitedItems": "Алкоголь, темекі және мерзімі өткен өнімдерді сатуға тыйым салынады",
+  "ruleInvalidPrice": "Әдеттегі баға мен toıdym бағасын дұрыс көрсетіңіз",
+  "ruleInvalidQuantity": "Бокс саны нөлден көп болуы керек",
+
+  "timerMinutesShort": "{minutes} мин",
+  "@timerMinutesShort": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "timerHoursMinutes": "{hours} сағ {minutes} мин",
+  "@timerHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "weightKg": "{value} кг",
+  "@weightKg": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+
+  "screenOnboardingTitle": "toıdym-ға қош келдіңіз",
+  "screenHomeTitle": "Жақын бокстар",
+  "screenMapTitle": "Бокстар картасы",
+  "screenBoxDetailTitle": "Бокс туралы",
+  "screenPaymentTitle": "Тапсырысты төлеу",
+  "screenOrderTitle": "Белсенді тапсырыс",
+  "screenSuccessTitle": "Ас болсын!",
+  "screenOrdersHistoryTitle": "Менің тапсырыстарым",
+  "screenProfileTitle": "Профиль",
+  "screenQyzylKitapTitle": "Қызыл кітап",
+  "screenVenueOnboardingTitle": "Мекемені қосу",
+  "screenVenueBoxesTodayTitle": "Бүгінгі бокстар",
+  "screenVenueNewBoxTitle": "Жаңа бокс",
+  "screenVenuePickupTitle": "Тапсырыс беру",
+  "screenVenueStatsTitle": "Қорытынды және төлемдер",
+  "screenVenueSettingsTitle": "Мекеме баптаулары",
+  "phaseFoundationStubNote": "Экран қаңқасы",
+
+  "dietHalalOnly": "Тек Халал",
+  "dietVegetarian": "Вегетариандық",
+  "dietNutFree": "Жаңғақсыз",
+  "sortNearest": "Жақын маңда",
+  "sortEndingSoon": "Таусылуға жақын",
+  "sortMaxDiscount": "Макс. жеңілдік",
+  "venueStatusBanned": "Бұғатталған",
+  "orderStatusReserved": "Брондалды",
+  "orderStatusCompleted": "Берілді",
+  "orderStatusCancelledByUser": "Сіз бас тарттыңыз",
+  "orderStatusCancelledByVenue": "Мекеме бас тартты",
+  "orderStatusNoShow": "Келмеді (Strike)",
+  "paymentOnSite": "Алу кезінде төлеу",
+  "adminBoxStatusExpired": "Мұрағатта",
+
+  "authLoginTitle": "toıdym-ға кіру",
+  "authRegisterTitle": "Тіркелу",
+  "authTabLogin": "Кіру",
+  "authTabRegister": "Тіркелу",
+  "authNameLabel": "Есіміңіз",
+  "authEmailLabel": "Email",
+  "authEmailOrPhoneLabel": "Email немесе телефон",
+  "authPasswordLabel": "Құпиясөз",
+  "authPasswordHint": "Кемінде 8 таңба, 1 сан және 1 бас әріп",
+  "authConfirmPasswordLabel": "Құпиясөзді қайталаңыз",
+  "authForgotPassword": "Құпиясөзді ұмыттыңыз ба?",
+  "authForgotPasswordSent": "Құпиясөзді қалпына келтіру сілтемесі {email} поштасына жіберілді",
+  "@authForgotPasswordSent": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "authVerifyEmailTitle": "Email-ды растаңыз",
+  "authVerifyEmailBody": "Растау сілтемесі {email} поштасына жіберілді. Демо үшін төмендегі батырманы басыңыз.",
+  "@authVerifyEmailBody": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "authVerifyEmailDemoButton": "Демо: Email растау",
+  "authVerifiedSuccess": "Email расталды! Енді кіруге болады.",
+  "authErrInvalidPhone": "+7 (7XX) XXX-XX-XX форматында дұрыс нөмір енгізіңіз",
+  "authErrInvalidEmail": "Дұрыс Email енгізіңіз",
+  "authErrWeakPassword": "Құпиясөзде кемінде 8 таңба, 1 сан және 1 бас әріп болуы керек",
+  "authErrPasswordMismatch": "Құпиясөздер сәйкес келмейді",
+  "authErrEmailExists": "Бұл Email бұрыннан тіркелген",
+  "authErrInvalidCredentials": "Логин немесе құпиясөз қате",
+  "authErrEmailNotVerified": "Кірмес бұрын Email-ды растаңыз",
+  "authErrRateLimited": "Кіру әрекеті тым көп. 15 минут күтіңіз",
+  "authErrAccountBanned": "3 рет келмегендіктен (No-Show) аккаунт уақытша бұғатталды",
+  "authDemoAccountsTitle": "Жылдам кіру (демо-рөлдер)",
+  "forcePassTitle": "Уақытша құпиясөзді ауыстырыңыз",
+  "forcePassSubtitle": "Серіктес кабинетін қорғау үшін жұмыс алдында тұрақты құпиясөз орнатыңыз",
+  "forcePassNewLabel": "Жаңа құпиясөз",
+  "forcePassSaveButton": "Құпиясөзді сақтау және кіру",
+
+  "onboardingDietaryTitle": "Тағам талғамдары",
+  "onboardingDietarySubtitle": "Сүзгілерді белгілеңіз — сәйкес бокстар әрқашан жоғарыда болады",
+  "onboardingPartnerCta": "Бизнес үшін: мекеме қосу",
+  "homeSortLabel": "Сұрыптау",
+  "homeGuestBanner": "Қонақ режимі: бокстарды еркін көріңіз, кіру — брондау кезінде.",
+  "boxDietaryMismatchWarn": "Құрамын тексеріңіз — талғамыңызға сай келмеуі мүмкін",
+
+  "screenReserveTitle": "Бронды растау",
+  "bookingOfflineTitle": "Алу кезінде төлеу (Trust Booking)",
+  "bookingOfflineBody": "Онлайн алдын ала төлем қажет емес — боксты мекеме кассасында төлейсіз. 1 сағат бұрын болдырмай келмей қалсаңыз, Strike беріледі (3 Strike = 30 күнге бұғаттау).",
+  "bookingOfflineAcceptButton": "Түсіндім, брондау",
+  "paymentOfflineBadge": "Алу кезінде төлеу (кассада Kaspi QR / карта / қолма-қол)",
+  "paymentRuleStrike": "Беру уақытынан кемінде 1 сағат бұрын тегін бас тартуға болады. Келмесеңіз (No-Show) Strike беріледі.",
+  "actionConfirmReserve": "{price} бағасына брондау",
+  "@actionConfirmReserve": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "orderReminder30m": "Еске салғыш: беру уақыты 30 минуттан кейін басталады",
+  "orderReminder15m": "Үлгеріңіз! Беру уақыты аяқталуына 15 минуттан аз қалды",
+  "orderUrgentClosing": "Шұғыл: беру аяқталуына {time}!",
+  "@orderUrgentClosing": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderRouteChooseMap": "Картада бағытты ашу",
+  "orderOpen2Gis": "2GIS арқылы ашу",
+  "orderOpenYandexMaps": "Яндекс Картада ашу",
+  "orderDemoNoShow": "Демо: келмеді деп белгілеу (No-Show)",
+  "orderNoShowRecorded": "Келмеу (No-Show) тіркелді. +1 Strike қосылды",
+  "profileStrikesTitle": "Сенімділік (Strikes)",
+  "profileStrikesCount": "Ереже бұзу: 3-тен {count}",
+  "@profileStrikesCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "profileBannedUntil": "Брондау {date} дейін шектелген",
+  "@profileBannedUntil": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "profileDietSettingsTitle": "Тағам сүзгілерім",
+  "shareImageFailed": "Суретті дайындау мүмкін болмады, мәтін көшірілді",
+  "shareImageReady": "Карточка бөлісуге дайын!",
+
+  "partnerLeadTitle": "Серіктестікке өтінім",
+  "partnerLeadSubtitle": "Мекеме байланыстарын қалдырыңыз — комиссиясыз (0%) кабинет қосып, уақытша құпиясөз береміз.",
+  "partnerLeadEmailLabel": "Серіктес Email-ы",
+  "partnerLeadSuccessTitle": "Өтінім жіберілді!",
+  "partnerLeadSuccessBody": "Мәртебесі: Тексеруде (PENDING). Әкімші мақұлдаған соң уақытша құпиясөзбен кіресіз.",
+  "venueTabToday": "Бүгінгі",
+  "venueTabArchive": "Мұрағат (Архив)",
+  "venueArchiveEmpty": "Мұрағатта бокстар әлі жоқ",
+  "venueRepublishButton": "Бүгінге қайта шығару",
+  "venueRepublishedSuccess": "Бокс қайта сатылымға шығарылды!",
+  "venueTemplatesTitle": "Менің шаблондарым (1 рет басу)",
+  "venueSaveAsTemplate": "Шаблон ретінде сақтау",
+  "venueTemplateApplied": "«{name}» шаблоны қолданылды",
+  "@venueTemplateApplied": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "venueNewBoxVegetarian": "Вегетариандық бокс",
+  "venueNewBoxNoCommissionNote": "Платформа комиссиясы: 0% · қонақ орнында төлейді",
+  "venuePickupEnterPinTitle": "Тапсырыстың 4 таңбалы PIN кодын енгізіңіз",
+  "venuePickupPinWrong": "PIN-код қате немесе тапсырыс табылмады",
+  "venuePickupClear": "Өшіру",
+  "venueStatsZeroCommission": "Комиссия 0% (ұсталымсыз)",
+  "venueStatsCompletedOrders": "Берілген тапсырыстар",
+  "venueStatsNoShowOrders": "Келмегендер (No-Show)",
+  "venueStatsLostProfitTitle": "Жіберілген пайда",
+  "venueStatsLostProfitSubtitle": "Өтпей қалған бокстар: {count} дана",
+  "@venueStatsLostProfitSubtitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "venueQumbekAdviceHighRemaining": "Құмбек кеңесі: өтпей қалған бокстар бар — бағаны 15%-ға түсіріп немесе беру уақытын 30 минутқа шегеріп көріңіз.",
+  "venueQumbekAdviceHighNoShow": "Құмбек кеңесі: келмеу жағдайлары бар. Қонақтарға беру алдында броньды еске салыңыз.",
+  "venueQumbekAdviceGreat": "Құмбек кеңесі: тамаша нәтиже! Үздік боксты 1 рет басып жариялау үшін шаблонға сақтаңыз.",
+
+  "adminActiveVenuesUsersLabel": "Белсенді дүкендер / қонақтар",
+  "adminCompletedBoxesLabel": "Сатылды (COMPLETED)",
+  "adminZeroCommissionBadge": "Комиссиясыз (0%)",
+  "adminAddPartnerButton": "Серіктес қосу",
+  "adminTempPasswordCreated": "Серіктес қосылды! Уақытша құпиясөз: {password} (Email: {email})",
+  "@adminTempPasswordCreated": {
+    "placeholders": {
+      "password": { "type": "String" },
+      "email": { "type": "String" }
+    }
+  },
+  "adminBanVenue": "Дүкенді бұғаттау",
+  "adminUnbanVenue": "Бұғаттан шығару",
+  "adminVenueCompletedCount": "Берілді: {count}",
+  "@adminVenueCompletedCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "adminVenueNoShowCount": "No-Show: {count}",
+  "@adminVenueNoShowCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "adminDeleteBox": "Боксты жою",
+  "adminStrikesTab": "Strikes және Бандар",
+  "adminAuditTab": "Аудит (AuditLogs)",
+  "adminRemoveStrike": "1 Strike алу",
+  "adminUnbanUser": "Банды алу",
+  "adminUserStrikesBadge": "Strikes: {count}/3",
+  "@adminUserStrikesBadge": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "adminAuditEmpty": "Аудит жазбалары әлі жоқ",
+  "adminTableColVenue": "Мекеме",
+  "adminTableColDistrict": "Аудан",
+  "adminTableColStatus": "Мәртебе",
+  "adminTableColHalal": "Халал",
+  "adminTableColStats": "Берілді / No-Show",
+  "adminTableColActions": "Әрекеттер",
+  "adminFilterBanned": "Бұғатталғандар",
+  "navAdminAudit": "Аудит",
+
+  "badgeResaleHot": "Жануда! · Тез алып кетіңіз",
+  "badgeResaleTag": "Қайта сатылым (Resale)",
+  "venueNewBoxSprintTitle": "15 минуттық Спринт терезесі",
+  "venueNewBoxSprintSubtitle": "Сервис ережесі бойынша беру жабылудан 1 сағ бұрын басталып ({window}), тек 15 мин болады",
+  "@venueNewBoxSprintSubtitle": {
+    "placeholders": {
+      "window": { "type": "String" }
+    }
+  },
+  "orderSprintTimerLabel": "15 мин Спринт: {time}",
+  "@orderSprintTimerLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderResaleErrorMessage": "Кешіріңіз, сіз үлгермедіңіз. Тапсырыс басқа адамдарға сатылымға шықты",
+  "orderDemoExpireSprint": "Демо: 15 мин өтті (00:00 → Resale)",
+  "fcmStrikeTitle": "Тапсырыс жойылды (No-Show)",
+  "fcmStrikeBody": "Тапсырыс жойылды және сізге 1 ескерту (Strike) берілді"
+}

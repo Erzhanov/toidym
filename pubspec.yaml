@@ -1,25 +1,35 @@
 name: toidym
-description: "Боксы с едой на самовывоз в Астане."
-publish_to: none
-version: 0.1.0+1
+description: "toıdym — сервис спасения еды в Астане"
+publish_to: 'none'
+version: 1.0.0+1
 
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.13.7
 
 dependencies:
-  cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^8.2.2
-  http: ^1.5.0
-  latlong2: ^0.9.1
-  mobile_scanner: ^7.2.0
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^2.6.1
+  go_router: ^18.1.4
+  dio: ^5.11.1
+  shared_preferences: ^2.5.6
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
   qr_flutter: ^4.1.0
-  share_plus: ^12.0.1
-  shared_preferences: ^2.5.3
-  url_launcher: ^6.3.2
+  mobile_scanner: ^7.5.0
+  confetti: ^0.8.0
+  cached_network_image: ^4.0.6
+  intl: ^0.20.3
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
+  flutter_secure_storage: ^11.2.0
+  geolocator: ^14.1.2
+  share_plus: ^13.3.1
+  audioplayers: ^6.8.1
+  web: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -27,10 +37,21 @@ dev_dependencies:
   flutter_lints: ^6.0.0
 
 flutter:
+  generate: true
   uses-material-design: true
   assets:
-    - assets/
+    - assets/audio/
+    - assets/images/
   fonts:
     - family: Nunito
       fonts:
-        - asset: assets/Nunito.ttf
+        - asset: assets/fonts/Nunito-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Nunito-Black.ttf
+          weight: 900

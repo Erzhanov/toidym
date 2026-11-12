@@ -1,0 +1,40 @@
+# ============================================================================
+# toıdym — Supabase CLI Project Configuration
+# Run `supabase login` -> `supabase link --project-ref YOUR_PROJECT_REF`
+# -> `supabase db push` -> `supabase functions deploy`
+# ============================================================================
+
+project_id = "kpmknrlltuzmilvtlshg"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[auth]
+enabled = true
+site_url = "http://localhost:8080"
+additional_redirect_urls = ["https://toidym.kz", "io.toidym.app://login-callback"]
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+
+[functions.resale-worker]
+# Triggered by cron / webhook with shared CRON_SECRET or service_role bearer
+verify_jwt = false
+
+[functions.approve-partner-lead]
+# Requires valid ADMIN JWT verified explicitly inside the Edge Function
+verify_jwt = true
+
+[functions.create-partner]
+# Requires valid ADMIN JWT or PARTNER JWT (for CASHIER creation)
+verify_jwt = true

@@ -1,51 +1,17 @@
-# Toidym
+# toidym
 
-Астанадағы кафе мен наубайханалардың балғын ас бокстарын брондап, алып кетуге арналған Flutter жобасы.
+A new Flutter project.
 
-## Ортақ сервермен іске қосу
+## Getting Started
 
-Flutter 3.47.9 және Python 3.11 немесе одан жаңа нұсқасы керек. Жоба қалтасынан орындаңыз.
+This project is a starting point for a Flutter application.
 
-```powershell
-flutter pub get
-flutter build web --no-web-resources-cdn --dart-define=TOIDYM_API=same-origin
-python server/app.py --demo
-```
+A few resources to get you started if this is your first Flutter project:
 
-[Web пилотын ашу](http://127.0.0.1:8766/). Броньдар мен рөлдер SQLite дерекқорында сақталады. Web интерфейсі деректерді шамамен бес секунд сайын жаңартады. Қойындыны қайта жүктегенде қайта кіру керек. Жергілікті ескі демо броньдары ортақ дерекқорға көшірілмейді.
+- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
+- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
 
-## Сынақ аккаунттары
-
-Барлығына растау коды **4821**. Телефон өрісіндегі +7 қосымшасынан кейін кестедегі 10 цифрды енгізіңіз.
-
-| Рөл | Телефон өрісіне | Қайдан ашылады |
-|---|---|---|
-| Әкімші | 7000000001 | Профиль → Админ панель |
-| «Таңғы нан» иесі | 7000000002 | Профиль → Кәсіпорын режимі |
-| «Таңғы нан» кассирі | 7000000003 | Профиль → Кәсіпорын режимі |
-| Сатып алушы | 7000000004 | Боксты ашу → Брондау |
-| Жаңа мекеме иесі | 7000000005 | Кәсіпорын режимі → Серіктес болу |
-
-Сатып алушы мен кассирді екі бөлек браузер профилінде ашыңыз. Сатып алушының төрт таңбалы **алып кету коды** тапсырыс экранында көрінеді. Кассир сол кодты енгізіп, беруді растайды. Кіруге арналған сынақ коды мен тапсырысты беруге арналған код бөлек.
-
-Жаңа мекеме үшін өтінімді жіберіп, әкімшімен мақұлдаңыз. Иесінің кабинетінде бокс жариялауға және кассирдің нөмірін қосуға болады. Қолданба әр мекемені бір филиал ретінде жүргізеді. Мекеме боксқа дайын суреттердің бірін таңдай алады. Төлем алып кететін жерде жасалады.
-
-## Нақты пилотқа қосу
-
-- SMS үшін **TWILIO_ACCOUNT_SID**, **TWILIO_AUTH_TOKEN** және **TWILIO_VERIFY_SERVICE_SID** мәндерін сервер ортасына орнатыңыз. **TOIDYM_ADMINS** айнымалысына халықаралық +7 пішіміндегі әкімші нөмірлерін үтірмен бөліп енгізіңіз. [Twilio Verify API](https://www.twilio.com/docs/verify/api/verification)
-- Серверді демо параметрінсіз іске қосыңыз. Ол SMS параметрлерін және әкімші нөмірлерін талап етеді. Демо режимі 127.0.0.1 мекенжайына байланады және сынақ нөмірлерін қабылдайды.
-- Web жинағы мен API-ді бір HTTPS доменінде TLS reverse proxy арқылы беріңіз. Пилот дерекқорына тұрақты диск пен сақтық көшірме орнатыңыз. Демо дерекқоры мен пилот дерекқоры бөлек. Қажет болса `--db` арқылы дерекқордың абсолютті жолын беріңіз.
-- Android немесе iOS жинағын ортақ серверге қосу үшін `--dart-define=TOIDYM_API=https://your-domain.example` параметрін қолданыңыз. Web үшін бір домендегі жинаққа `same-origin` жеткілікті.
-
-## Тексеру және офлайн демо
-
-```powershell
-python -m unittest server.test_pilot -v
-dart analyze
-flutter test --concurrency=1
-flutter run -d chrome --release
-```
-
-Соңғы команда офлайн демоны ашады. Web интерфейсі iPhone өлшемдеріне бейімделген. Қозғалысты азайту параметрі қосылғанда экран ауысуы мен төменгі мәзірдің сырғуы өшеді.
-
-
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

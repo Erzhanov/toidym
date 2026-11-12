@@ -1,11 +1,11 @@
 {
-    "name": "Toidym",
-    "short_name": "Toidym",
+    "name": "toidym",
+    "short_name": "toidym",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#FFF5DF",
-    "theme_color": "#2B2350",
-    "description": "Астанадағы балғын ас бокстарын өзіңіз алып кетіңіз.",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

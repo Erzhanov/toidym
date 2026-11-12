@@ -1,0 +1,718 @@
+{
+  "@@locale": "ru",
+  "appName": "toıdym",
+  "brandPhrase": "Ас болсын!",
+  "brandSlogan": "Спасай вкусную еду до −70%",
+  "qyzylKitapTitle": "Қызыл кітап",
+  "qumbekName": "Құмбек",
+  "languageRu": "Русский",
+  "languageKk": "Қазақша",
+  "languageTitle": "Язык приложения",
+
+  "navBoxes": "Боксы",
+  "navMap": "Карта",
+  "navOrders": "Заказы",
+  "navProfile": "Профиль",
+  "navVenueBoxes": "Боксы",
+  "navVenuePickup": "Выдача",
+  "navVenueStats": "Итоги",
+
+  "districtEsil": "Есиль",
+  "districtAlmaty": "Алматы",
+  "districtSaryarka": "Сарыарка",
+  "districtBaiqonyr": "Байқоңыр",
+  "districtAllAstana": "Вся Астана",
+  "cityAstana": "Астана",
+
+  "categoryAll": "Все",
+  "categoryBakery": "Выпечка",
+  "categoryHotFood": "Горячее",
+  "categoryHalal": "Халал",
+  "categoryCoffee": "Кофе",
+  "categoryGrocery": "Магазин",
+
+  "badgeHalal": "Халал",
+  "badgeEndingSoon": "Скоро закончатся",
+  "badgeLeftCount": "Осталось {count}",
+  "@badgeLeftCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "badgeSoldOut": "Разобрали",
+  "pickupToday": "Забрать сегодня {window}",
+  "@pickupToday": {
+    "placeholders": {
+      "window": { "type": "String" }
+    }
+  },
+  "distanceKm": "{value} км",
+  "@distanceKm": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+  "distanceMeters": "{value} м",
+  "@distanceMeters": {
+    "placeholders": {
+      "value": { "type": "int" }
+    }
+  },
+  "reviewsCountShort": "({count})",
+  "@reviewsCountShort": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "boxesWaitingCount": "{count} боксов рядом ждут спасения",
+  "@boxesWaitingCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "actionStart": "Начать",
+  "actionRepresentVenue": "Я представляю заведение",
+  "actionRetry": "Повторить",
+  "actionReserveFor": "Забронировать за {price}",
+  "@actionReserveFor": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "actionPayAmount": "Оплатить {price}",
+  "@actionPayAmount": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "actionLogin": "Войти",
+  "actionLogout": "Выйти",
+  "actionDone": "Готово",
+  "actionCancel": "Отменить",
+  "actionSave": "Сохранить",
+  "actionNext": "Далее",
+  "actionBack": "Назад",
+  "actionShare": "Поделиться",
+  "actionDetails": "Подробнее",
+  "actionRoute": "Маршрут",
+  "actionCall": "Позвонить",
+  "actionResetFilters": "Сбросить фильтры",
+  "actionAddToFavorites": "Добавить в избранное",
+  "actionRemoveFromFavorites": "Убрать из избранного",
+  "actionSwitchToVenue": "Режим заведения",
+  "actionSwitchToBuyer": "Покупатель",
+  "actionBecomePartner": "Стать партнёром",
+
+  "stateErrorTitle": "Не удалось загрузить",
+  "stateErrorSubtitle": "Проверьте соединение и попробуйте ещё раз",
+  "stateEmptyBoxesTitle": "Рядом пока нет боксов",
+  "stateEmptyBoxesSubtitle": "Құмбек ищет новые предложения — загляните чуть позже или смените фильтр",
+
+  "onboardingLocationTitle": "Где спасать боксы?",
+  "onboardingLocationSubtitle": "Разрешите геопозицию или выберите район Астаны — аккаунт пока не нужен",
+  "onboardingDetectLocation": "Определить геопозицию",
+  "onboardingLocationDetected": "Определено: Астана, {district}",
+  "@onboardingLocationDetected": {
+    "placeholders": {
+      "district": { "type": "String" }
+    }
+  },
+  "onboardingOrChooseDistrict": "Или выберите район вручную",
+
+  "homeGreeting": "Сәлем! Что спасём сегодня?",
+  "homeGreetingNamed": "Сәлем, {name}! Выберите бокс",
+  "@homeGreetingNamed": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeSearchHint": "Поиск бокса или заведения",
+  "homeViewList": "Список",
+  "homeViewMap": "На карте",
+  "homeNotificationsTitle": "Уведомления",
+  "homeMarkAllRead": "Прочитать все",
+  "homeEndingSoonSection": "Скоро закончатся",
+  "homeAllBoxesSection": "Все предложения",
+  "homeSimulateError": "Проверить экран ошибки",
+
+  "mapYouAreHere": "Вы здесь",
+  "mapCenterOnMe": "Центрировать",
+  "mapOpenInList": "Списком",
+
+  "boxDetailSurpriseTitle": "Что обычно внутри",
+  "boxDetailSurpriseDisclaimer": "Состав зависит от того, что осталось за день. Не совпало с описанием — можно отказаться при получении.",
+  "boxDetailAllergensTitle": "Аллергены",
+  "boxDetailAllergensEmpty": "Основные аллергены не указаны",
+  "boxDetailAllergensNote": "При аллергии уточните состав на месте до получения.",
+  "boxDetailPickupOnlyBadge": "Только самовывоз",
+  "boxDetailReviewsTitle": "Отзывы гостей",
+  "boxDetailShareMessage": "Спасаю бокс «{title}» в {venue} за {price} через toıdym!",
+  "@boxDetailShareMessage": {
+    "placeholders": {
+      "title": { "type": "String" },
+      "venue": { "type": "String" },
+      "price": { "type": "String" }
+    }
+  },
+  "boxDetailRouteOpening": "Маршрут до {address} (Астана): {lat}, {lng}",
+  "@boxDetailRouteOpening": {
+    "placeholders": {
+      "address": { "type": "String" },
+      "lat": { "type": "String" },
+      "lng": { "type": "String" }
+    }
+  },
+
+  "authPhoneTitle": "Войдите, чтобы спасти бокс",
+  "authPhoneSubtitle": "Отправим короткий код в SMS для подтверждения заказа",
+  "authPhoneLabel": "Номер телефона",
+  "authPhoneHint": "+7 (777) 123-45-67",
+  "authSendCode": "Получить код",
+  "authSmsTitle": "Введите код из SMS",
+  "authSmsSubtitle": "Мы отправили 4-значный код на {phone}",
+  "@authSmsSubtitle": {
+    "placeholders": {
+      "phone": { "type": "String" }
+    }
+  },
+  "authSmsHint": "Введите 4-значный код (демо: 1234)",
+  "authConfirmCode": "Подтвердить",
+  "authChangePhone": "Изменить номер",
+  "authInvalidCode": "Неверный код. Для демо используйте 1234",
+  "guestBenefitsTitle": "Войдите в аккаунт",
+  "guestBenefitsSubtitle": "Сохраняйте любимые места, копите спасённые боксы и открывайте жителей «Қызыл кітап»",
+  "guestBenefitOrders": "История всех заказов и быстрый доступ к QR",
+  "guestBenefitStats": "Подсчёт спасённых килограммов еды и экономии",
+  "guestBenefitKitap": "Коллекция редких животных «Қызыл кітап»",
+
+  "paymentQuantityLabel": "Количество боксов",
+  "paymentMethodTitle": "Способ оплаты",
+  "paymentKaspi": "Kaspi.kz",
+  "paymentKaspiHint": "Счёт придёт в приложение Kaspi",
+  "paymentCard": "Банковская карта",
+  "paymentCardNumberLabel": "Номер карты",
+  "paymentCardExpiryLabel": "Срок (ММ/ГГ)",
+  "paymentCardCvvLabel": "CVV",
+  "paymentCardInvalid": "Проверьте данные карты",
+  "paymentRegularPrice": "Обычная цена",
+  "paymentYouSave": "Вы экономите",
+  "paymentTotal": "Итого",
+  "paymentRuleRefund": "Если заведение отменит бокс, бронь аннулируется без штрафа (Strike не начисляется).",
+  "paymentRuleCharity": "Не успели в окно без отмены за 1 час — начисляется Strike (3 Strike = бан 30 дней).",
+  "paymentSimulateError": "Демо: имитировать сбой бронирования",
+  "paymentProcessing": "Оформляем бронь...",
+
+  "orderTitle": "Заказ {number}",
+  "@orderTitle": {
+    "placeholders": {
+      "number": { "type": "String" }
+    }
+  },
+  "orderShowQrHint": "Покажите QR или назовите код на кассе",
+  "orderPinLabel": "Код выдачи",
+  "orderCountdownBefore": "До выдачи {time}",
+  "@orderCountdownBefore": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderCountdownDuring": "Окно выдачи открыто · осталось {time}",
+  "@orderCountdownDuring": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderCountdownEnded": "Окно выдачи завершилось",
+  "orderCancelButton": "Отменить заказ",
+  "orderCancelBlockedHint": "Отменить можно не позднее чем за 1 час до начала выдачи",
+  "orderCancelConfirmTitle": "Отменить заказ?",
+  "orderCancelConfirmBody": "Бокс снова станет доступен другим покупателям без начисления Strike.",
+  "orderProblemButton": "Проблема с заказом",
+  "orderDemoCompletePickup": "Демо: заведение выдало заказ",
+  "orderCallDialogTitle": "Позвонить в заведение",
+  "orderCallDialogBody": "Контактный номер: {phone}",
+  "@orderCallDialogBody": {
+    "placeholders": {
+      "phone": { "type": "String" }
+    }
+  },
+
+  "complaintTitle": "Проблема с заказом",
+  "complaintSubtitle": "Опишите, что пошло не так. Жалоба принимается в течение 24 часов после получения, ответ — до 3 рабочих дней.",
+  "complaintNoteHint": "Например: состав сильно отличался от описания или бокс оказался несвежим",
+  "complaintAddPhoto": "Прикрепить фото",
+  "complaintPhotoAdded": "Фото прикреплено",
+  "complaintSubmit": "Отправить жалобу",
+  "complaintSubmittedToast": "Жалоба принята. Ответим в течение 3 рабочих дней",
+  "complaintAlreadySent": "Жалоба по этому заказу уже отправлена",
+
+  "successSavedSubtitle": "Вы спасли бокс и сэкономили {amount}",
+  "@successSavedSubtitle": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "successRateTitle": "Как вам бокс?",
+  "successTagTasty": "Вкусно",
+  "successTagPlenty": "Много еды",
+  "successTagFresh": "Свежее",
+  "successTagPolite": "Вежливо",
+  "successCommentHint": "Пара слов для заведения (необязательно)",
+  "successShareStories": "Поделиться в сторис",
+  "successStoriesTitle": "Открытка для сторис",
+  "successStoriesSaved": "Открытка скопирована для публикации в сторис!",
+
+  "ordersTabActive": "Активные",
+  "ordersTabPast": "Прошедшие",
+  "ordersEmptyActiveTitle": "Нет активных заказов",
+  "ordersEmptyActiveSubtitle": "Выберите вкусный бокс на вечер и заберите его без очередей",
+  "ordersEmptyPastTitle": "Прошедших заказов пока нет",
+  "ordersEmptyPastSubtitle": "Здесь появится история ваших спасённых боксов",
+  "ordersOpenQr": "Открыть QR",
+  "orderStatusPaid": "Оплачено",
+  "orderStatusReady": "Готов к выдаче",
+  "orderStatusPickedUp": "Получен",
+  "orderStatusCancelled": "Отменён",
+  "orderStatusExpired": "Время вышло",
+
+  "profileBoxesSaved": "Боксов спасено",
+  "profileKgSaved": "Еды не в мусор",
+  "profileMoneySaved": "Сэкономлено",
+  "profileFavoritesTitle": "Избранное",
+  "profileFavoritesEmpty": "Нажмите на сердечко у бокса, чтобы не потерять любимое заведение",
+  "profileFavoriteAlerts": "Боксы в любимых местах",
+  "profileFavoriteAlertsSubtitle": "Напоминать, когда любимые места выставляют боксы",
+  "profileCharityTitle": "Подвешенный бокс для фонда",
+  "profileCharitySubtitle": "Оплатите бокс — мы передадим его в благотворительный фонд Астаны",
+  "profileCharityConfirm": "Подарить бокс фонду",
+  "profileCharitySuccess": "Спасибо! Вы оплатили подвешенный бокс для фонда",
+  "profileRoleDemoTitle": "Роль и панели системы",
+  "profileRoleBuyer": "Покупатель",
+  "profileRoleOwner": "Владелец магазина",
+  "profileRoleCashier": "Кассир",
+  "profileRoleAdmin": "Администратор",
+  "actionSwitchToAdmin": "Админ-панель",
+  "actionOpenAdminDemo": "Админ-панель",
+
+  "navAdminOverview": "Сводка",
+  "navAdminVenues": "Магазины",
+  "navAdminBoxes": "Боксы",
+  "navAdminComplaints": "Жалобы",
+
+  "screenAdminOverviewTitle": "Админ-панель · Сводка",
+  "screenAdminVenuesTitle": "Магазины и Халал",
+  "screenAdminBoxesTitle": "Каталог боксов",
+  "screenAdminComplaintsTitle": "Жалобы и заказы",
+
+  "adminGmvLabel": "Оборот (GMV)",
+  "adminCommissionLabel": "Комиссия 15%",
+  "adminVenuesCountLabel": "Магазины",
+  "adminOpenComplaintsLabel": "Открытые жалобы",
+  "adminPendingQueueTitle": "Требуют проверки",
+  "adminRecentOrdersTitle": "Последние заказы",
+
+  "adminFilterAll": "Все",
+  "adminFilterPending": "На проверке",
+  "adminFilterApproved": "Одобренные",
+  "adminFilterRejected": "Отклонённые",
+
+  "adminApproveVenue": "Одобрить магазин",
+  "adminRejectVenue": "На доработку",
+  "adminVerifyHalal": "Подтвердить Халал",
+  "adminRejectHalal": "Отклонить Халал",
+  "adminHalalStatusVerified": "Халал проверен",
+  "adminHalalStatusPending": "Халал на проверке",
+  "adminHalalStatusRejected": "Халал отклонён",
+  "adminHalalStatusNone": "Без Халал",
+  "adminRejectReasonHint": "Укажите замечание для магазина",
+
+  "adminHideBox": "Снять с публикации",
+  "adminRestoreBox": "Вернуть в продажу",
+  "adminBoxStatusActive": "Активен",
+  "adminBoxStatusSoldOut": "Разобрали",
+  "adminBoxStatusDisabled": "Скрыт",
+
+  "adminComplaintsTab": "Жалобы",
+  "adminAllOrdersTab": "Все заказы",
+  "adminComplaintTakeInReview": "Взять в работу",
+  "adminComplaintRefund": "Решить с возвратом",
+  "adminComplaintResolve": "Закрыть с ответом",
+  "adminComplaintResolutionHint": "Ответ покупателю (до 3 раб. дней)",
+  "adminComplaintStatusOpen": "Открыта",
+  "adminComplaintStatusInReview": "В работе",
+  "adminComplaintStatusResolved": "Решена",
+  "adminComplaintStatusRefunded": "Возврат оформлен",
+  "adminNoComplaintsTitle": "Открытых жалоб нет",
+  "adminNoComplaintsSubtitle": "Все обращения покупателей уже рассмотрены",
+
+  "venueModerationPendingBanner": "Магазин на проверке: боксы появятся у покупателей после одобрения администратором.",
+  "venueModerationRejectedBanner": "Заявка требует правок",
+  "venueSettingsHalalNumber": "Номер халал-сертификата",
+  "venueSettingsSubmitHalal": "Отправить на проверку Халал",
+
+  "animalQumbek": "Құмбек",
+  "animalIrbis": "Ирбис",
+  "animalSaigak": "Сайгак",
+  "animalSeal": "Тюлень",
+  "qyzylKitapProgress": "{saved} из {target} боксов — ещё {left}, и откроется {animal}",
+  "@qyzylKitapProgress": {
+    "placeholders": {
+      "saved": { "type": "int" },
+      "target": { "type": "int" },
+      "left": { "type": "int" },
+      "animal": { "type": "String" }
+    }
+  },
+  "qyzylKitapAllUnlocked": "Все жители «Қызыл кітап» открыты! Вы спасаете планету каждый день.",
+  "qyzylKitapUnlocked": "Открыт",
+  "qyzylKitapLockedLeft": "ещё {count} боксов",
+  "@qyzylKitapLockedLeft": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "qyzylKitapNoMoneyNote": "Коллекция отмечает ваш вклад в спасение еды — бонусы на деньги не обмениваются.",
+
+  "venueOnboardingStep1": "Заведение",
+  "venueOnboardingStep2": "Адрес и часы",
+  "venueOnboardingStep3": "Реквизиты",
+  "venueOnboardingStep4": "Договор",
+  "venueNameLabel": "Название заведения",
+  "venueAddressLabel": "Адрес в Астане",
+  "venuePhoneLabel": "Телефон для связи",
+  "venueBinLabel": "БИН / ИИН",
+  "venueIbanLabel": "ИИК (IBAN)",
+  "venueBikLabel": "БИК",
+  "venueContractText": "Стандартный договор партнёрства toıdym: комиссия 15% с проданных боксов, еженедельные выплаты по понедельникам. Наличные расчёты и продажа запрещённых товаров не допускаются.",
+  "venueContractAgree": "Принимаю условия договора оферты",
+  "venueSubmitApplication": "Отправить заявку",
+  "venueStatusPending": "На проверке",
+  "venueStatusApproved": "Одобрено",
+  "venueStatusRejected": "Нужно исправить",
+  "venueDemoStatusSwitch": "Демо-статус заявки",
+  "venueOpenDashboard": "Перейти в кабинет",
+
+  "venueTodaySold": "Продано",
+  "venueTodayWaiting": "Ждут выдачи",
+  "venueTodayRevenue": "Выручка",
+  "venueQumbekTip": "Публикуйте боксы до 16:00 — так покупатели заметят их заранее",
+  "venueInSale": "В продаже",
+  "venueStockLabel": "Остаток",
+  "venueNewBoxButton": "Новый бокс",
+
+  "venueNewBoxTitleField": "Название бокса",
+  "venueNewBoxType": "Тип бокса",
+  "venueNewBoxSurprise": "Сюрприз-бокс",
+  "venueNewBoxSet": "Конкретный набор",
+  "venueNewBoxInside": "Что может быть внутри",
+  "venueNewBoxOriginalPrice": "Обычная цена (₸)",
+  "venueNewBoxDiscountPrice": "Цена в toıdym (₸)",
+  "venueNewBoxAutoDiscount": "Скидка: {percent}%",
+  "@venueNewBoxAutoDiscount": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+  "venueNewBoxLowDiscountWarn": "Скидка меньше 50% — публикация невозможна",
+  "venueNewBoxYouReceive": "Вы получите: {amount} с бокса",
+  "@venueNewBoxYouReceive": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+  "venueNewBoxQuantity": "Количество боксов",
+  "venueNewBoxWindowStart": "Начало выдачи",
+  "venueNewBoxWindowEnd": "Конец выдачи",
+  "venueNewBoxRepeatDays": "Повтор по дням недели",
+  "venueNewBoxAllergens": "Аллергены",
+  "venueNewBoxPreviewButton": "Предпросмотр",
+  "venueNewBoxPublishButton": "Опубликовать",
+  "venueNewBoxHalalNoCertHint": "Загрузите и подтвердите халал-сертификат в настройках",
+
+  "venuePickupScannerHint": "Наведите камеру на QR покупателя",
+  "venuePickupSimulateQr": "Демо: скан QR первого заказа",
+  "venuePickupPinHint": "4-значный код",
+  "venuePickupGiveButton": "Выдать заказ",
+  "venuePickupWaitingTitle": "Ждут выдачи",
+  "venuePickupEmptyWaiting": "Нет заказов, ожидающих выдачи",
+  "venuePickupSuccess": "Заказ {number} выдан!",
+  "@venuePickupSuccess": {
+    "placeholders": {
+      "number": { "type": "String" }
+    }
+  },
+  "venuePickupCancelTitle": "Отменить заказ",
+  "venuePickupCancelReasonHint": "Причина отмены (деньги вернутся покупателю автоматически)",
+
+  "venueStatsDay": "День",
+  "venueStatsWeek": "Неделя",
+  "venueStatsMonth": "Месяц",
+  "venueStatsFoodSaved": "Спасённая еда",
+  "venueStatsCommission": "Комиссия",
+  "venueStatsNextPayout": "Следующая выплата",
+  "venueStatsPayoutHistory": "История выплат",
+  "venueStatsReviews": "Рейтинг и отзывы",
+
+  "venueSettingsWorkHours": "Часы работы",
+  "venueSettingsStaff": "Сотрудники",
+  "venueSettingsAddCashier": "Добавить кассира",
+  "venueSettingsCashierName": "Имя кассира",
+  "venueSettingsSupport": "Поддержка партнёров",
+  "venueSettingsSupportText": "Telegram @toidym_partner · +7 (7172) 55-00-11",
+
+  "ruleDiscountTooLow": "Скидка должна быть не меньше 50%",
+  "ruleWindowTooShort": "Окно выдачи должно длиться минимум 30 минут",
+  "ruleWindowOutsideHours": "Окно выдачи должно быть в рабочие часы заведения",
+  "rulePublishTooLate": "Публикация возможна не позднее чем за 2 часа до начала выдачи",
+  "ruleHalalCertRequired": "Метка «Халал» доступна только с проверенным сертификатом",
+  "ruleProhibitedItems": "Запрещена продажа алкоголя, табака и просроченных продуктов",
+  "ruleInvalidPrice": "Укажите корректную обычную цену и цену в toıdym",
+  "ruleInvalidQuantity": "Количество боксов должно быть больше нуля",
+
+  "timerMinutesShort": "{minutes} мин",
+  "@timerMinutesShort": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
+  "timerHoursMinutes": "{hours} ч {minutes} мин",
+  "@timerHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "int" }
+    }
+  },
+  "weightKg": "{value} кг",
+  "@weightKg": {
+    "placeholders": {
+      "value": { "type": "String" }
+    }
+  },
+
+  "screenOnboardingTitle": "Добро пожаловать в toıdym",
+  "screenHomeTitle": "Боксы рядом",
+  "screenMapTitle": "Карта боксов",
+  "screenBoxDetailTitle": "О боксе",
+  "screenPaymentTitle": "Оплата заказа",
+  "screenOrderTitle": "Активный заказ",
+  "screenSuccessTitle": "Ас болсын!",
+  "screenOrdersHistoryTitle": "Мои заказы",
+  "screenProfileTitle": "Профиль",
+  "screenQyzylKitapTitle": "Қызыл кітап",
+  "screenVenueOnboardingTitle": "Подключение заведения",
+  "screenVenueBoxesTodayTitle": "Боксы сегодня",
+  "screenVenueNewBoxTitle": "Новый бокс",
+  "screenVenuePickupTitle": "Выдача заказов",
+  "screenVenueStatsTitle": "Итоги и выплаты",
+  "screenVenueSettingsTitle": "Настройки заведения",
+  "phaseFoundationStubNote": "Каркас экрана",
+
+  "dietHalalOnly": "Только Халал",
+  "dietVegetarian": "Вегетарианское",
+  "dietNutFree": "Без орехов",
+  "sortNearest": "Ближайшие",
+  "sortEndingSoon": "Скоро закончатся",
+  "sortMaxDiscount": "Макс. скидка",
+  "venueStatusBanned": "Заблокирован",
+  "orderStatusReserved": "Забронировано",
+  "orderStatusCompleted": "Выдано",
+  "orderStatusCancelledByUser": "Отменено вами",
+  "orderStatusCancelledByVenue": "Отменено заведением",
+  "orderStatusNoShow": "Неявка (Strike)",
+  "paymentOnSite": "Оплата при получении",
+  "adminBoxStatusExpired": "В архиве",
+
+  "authLoginTitle": "Вход в toıdym",
+  "authRegisterTitle": "Регистрация",
+  "authTabLogin": "Вход",
+  "authTabRegister": "Регистрация",
+  "authNameLabel": "Имя",
+  "authEmailLabel": "Email",
+  "authEmailOrPhoneLabel": "Email или телефон",
+  "authPasswordLabel": "Пароль",
+  "authPasswordHint": "Мин. 8 символов, 1 цифра и 1 заглавная буква",
+  "authConfirmPasswordLabel": "Повторите пароль",
+  "authForgotPassword": "Забыли пароль?",
+  "authForgotPasswordSent": "Ссылка для сброса пароля отправлена на {email}",
+  "@authForgotPasswordSent": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "authVerifyEmailTitle": "Подтвердите Email",
+  "authVerifyEmailBody": "Мы отправили письмо со ссылкой подтверждения на {email}. Для демо нажмите кнопку ниже.",
+  "@authVerifyEmailBody": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "authVerifyEmailDemoButton": "Демо: подтвердить Email",
+  "authVerifiedSuccess": "Email подтверждён! Теперь можно войти.",
+  "authErrInvalidPhone": "Введите корректный казахстанский номер +7 (7XX) XXX-XX-XX",
+  "authErrInvalidEmail": "Введите корректный Email",
+  "authErrWeakPassword": "Пароль должен содержать от 8 символов, 1 цифру и 1 заглавную букву",
+  "authErrPasswordMismatch": "Пароли не совпадают",
+  "authErrEmailExists": "Пользователь с таким Email уже зарегистрирован",
+  "authErrInvalidCredentials": "Неверный логин или пароль",
+  "authErrEmailNotVerified": "Подтвердите Email перед входом",
+  "authErrRateLimited": "Слишком много попыток входа. Подождите 15 минут",
+  "authErrAccountBanned": "Аккаунт временно заблокирован из-за 3 пропусков (No-Show)",
+  "authDemoAccountsTitle": "Быстрый вход (демо-роли)",
+  "forcePassTitle": "Смените временный пароль",
+  "forcePassSubtitle": "Для защиты кабинета партнёра задайте постоянный пароль перед работой",
+  "forcePassNewLabel": "Новый пароль",
+  "forcePassSaveButton": "Сохранить пароль и войти",
+
+  "onboardingDietaryTitle": "Предпочтения в еде",
+  "onboardingDietarySubtitle": "Отметьте фильтры — подходящие боксы всегда будут выше",
+  "onboardingPartnerCta": "Для бизнеса: подключить заведение",
+  "homeSortLabel": "Сортировка",
+  "homeGuestBanner": "Гостевой режим: просматривайте боксы свободно, вход — при бронировании.",
+  "boxDietaryMismatchWarn": "Проверьте состав — может не подходить по фильтру",
+
+  "screenReserveTitle": "Подтверждение брони",
+  "bookingOfflineTitle": "Оплата при получении (Trust Booking)",
+  "bookingOfflineBody": "Онлайн-предоплата не нужна — вы оплачиваете бокс на кассе при получении. Если не заберёте заказ без отмены за 1 час, будет начислен Strike (3 Strike = бан на 30 дней).",
+  "bookingOfflineAcceptButton": "Понимаю, забронировать",
+  "paymentOfflineBadge": "Оплата при получении (Kaspi QR / карта / наличные на кассе)",
+  "paymentRuleStrike": "Бесплатная отмена возможна не позднее чем за 1 час до выдачи. За неявку (No-Show) начисляется Strike.",
+  "actionConfirmReserve": "Забронировать за {price}",
+  "@actionConfirmReserve": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "orderReminder30m": "Напоминание: окно выдачи начинается через 30 минут",
+  "orderReminder15m": "Успевайте! До закрытия окна выдачи осталось менее 15 минут",
+  "orderUrgentClosing": "Срочно: до конца выдачи {time}!",
+  "@orderUrgentClosing": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderRouteChooseMap": "Открыть маршрут в картах",
+  "orderOpen2Gis": "Открыть в 2GIS",
+  "orderOpenYandexMaps": "Открыть в Яндекс Картах",
+  "orderDemoNoShow": "Демо: отметить неявку (No-Show)",
+  "orderNoShowRecorded": "Отмечена неявка (No-Show). Начислен +1 Strike",
+  "profileStrikesTitle": "Надёжность (Strikes)",
+  "profileStrikesCount": "Нарушений: {count} из 3",
+  "@profileStrikesCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "profileBannedUntil": "Бронирование ограничено до {date}",
+  "@profileBannedUntil": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "profileDietSettingsTitle": "Мои фильтры питания",
+  "shareImageFailed": "Не удалось подготовить картинку, текст скопирован",
+  "shareImageReady": "Карточка подготовлена к отправке!",
+
+  "partnerLeadTitle": "Заявка на партнёрство",
+  "partnerLeadSubtitle": "Оставьте контакты заведения — подключим кабинет без комиссии (0%) и выдадим временный пароль.",
+  "partnerLeadEmailLabel": "Email партнёра",
+  "partnerLeadSuccessTitle": "Заявка отправлена!",
+  "partnerLeadSuccessBody": "Статус: На проверке (PENDING). После одобрения администратором вход откроется с временным паролем.",
+  "venueTabToday": "Бүгінгі (Сегодня)",
+  "venueTabArchive": "Мұрағат (Архив)",
+  "venueArchiveEmpty": "Архивных боксов пока нет",
+  "venueRepublishButton": "Перевыставить на сегодня",
+  "venueRepublishedSuccess": "Бокс перевыставлен в продажу!",
+  "venueTemplatesTitle": "Менің шаблондарым (в 1 клик)",
+  "venueSaveAsTemplate": "Сохранить как шаблон",
+  "venueTemplateApplied": "Шаблон «{name}» применён",
+  "@venueTemplateApplied": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "venueNewBoxVegetarian": "Вегетарианский бокс",
+  "venueNewBoxNoCommissionNote": "Комиссия платформы: 0% · гость платит на кассе",
+  "venuePickupEnterPinTitle": "Введите 4-значный PIN заказа",
+  "venuePickupPinWrong": "Неверный PIN-код или заказ не найден",
+  "venuePickupClear": "Сброс",
+  "venueStatsZeroCommission": "Комиссия 0% (без удержаний)",
+  "venueStatsCompletedOrders": "Выдано заказов",
+  "venueStatsNoShowOrders": "Неявки (No-Show)",
+  "venueStatsLostProfitTitle": "Упущенная выгода",
+  "venueStatsLostProfitSubtitle": "Невыкупленных боксов: {count} шт.",
+  "@venueStatsLostProfitSubtitle": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "venueQumbekAdviceHighRemaining": "Совет Құмбек: остались невыкупленные боксы — снизьте цену на 15% или сдвиньте окно выдачи на 30 мин позже.",
+  "venueQumbekAdviceHighNoShow": "Совет Құмбек: были неявки (No-Show). Напоминайте гостям подтвердить бронь за час до выдачи.",
+  "venueQumbekAdviceGreat": "Совет Құмбек: отличная оборачиваемость! Сохраните лучший бокс в шаблоны для публикации в 1 клик.",
+
+  "adminActiveVenuesUsersLabel": "Активные магазины / гости",
+  "adminCompletedBoxesLabel": "Продано (COMPLETED)",
+  "adminZeroCommissionBadge": "Без комиссии (0%)",
+  "adminAddPartnerButton": "Добавить партнёра",
+  "adminTempPasswordCreated": "Партнёр подключён! Временный пароль: {password} (Email: {email})",
+  "@adminTempPasswordCreated": {
+    "placeholders": {
+      "password": { "type": "String" },
+      "email": { "type": "String" }
+    }
+  },
+  "adminBanVenue": "Заблокировать магазин",
+  "adminUnbanVenue": "Разблокировать",
+  "adminVenueCompletedCount": "Выдано: {count}",
+  "@adminVenueCompletedCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "adminVenueNoShowCount": "No-Show: {count}",
+  "@adminVenueNoShowCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "adminDeleteBox": "Удалить бокс",
+  "adminStrikesTab": "Strikes и Баны",
+  "adminAuditTab": "Аудит (AuditLogs)",
+  "adminRemoveStrike": "Снять 1 Strike",
+  "adminUnbanUser": "Снять бан",
+  "adminUserStrikesBadge": "Strikes: {count}/3",
+  "@adminUserStrikesBadge": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "adminAuditEmpty": "Записей аудита пока нет",
+  "adminTableColVenue": "Заведение",
+  "adminTableColDistrict": "Район",
+  "adminTableColStatus": "Статус",
+  "adminTableColHalal": "Халал",
+  "adminTableColStats": "Выдано / No-Show",
+  "adminTableColActions": "Действия",
+  "adminFilterBanned": "Заблокированные",
+  "navAdminAudit": "Аудит",
+
+  "badgeResaleHot": "Горит! · Заберите срочно",
+  "badgeResaleTag": "Авто-перепродажа (Resale)",
+  "venueNewBoxSprintTitle": "Спринт-окно 15 минут",
+  "venueNewBoxSprintSubtitle": "По правилу сервиса выдача начинается за 1 ч до закрытия ({window}) и длится ровно 15 мин",
+  "@venueNewBoxSprintSubtitle": {
+    "placeholders": {
+      "window": { "type": "String" }
+    }
+  },
+  "orderSprintTimerLabel": "15-мин Спринт: {time}",
+  "@orderSprintTimerLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "orderResaleErrorMessage": "Извините, вы не успели. Заказ выставлен на перепродажу другим пользователям",
+  "orderDemoExpireSprint": "Демо: 15 мин вышли (00:00 → Resale)",
+  "fcmStrikeTitle": "Заказ аннулирован (No-Show)",
+  "fcmStrikeBody": "Заказ аннулирован, вам начислено 1 предупреждение (Strike)"
+}

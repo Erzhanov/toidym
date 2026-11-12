@@ -1,73 +1,74 @@
 <!DOCTYPE html>
-<html lang="kk">
+<html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-  <meta name="theme-color" content="#2B2350">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Астанадағы балғын ас бокстарын брондап, өзіңіз алып кетіңіз.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#2B2350">
+  <meta name="description" content="toıdym — сервис спасения еды в Астане">
 
-  <!-- iOS meta tags & icons -->
+  <link rel="preconnect" href="https://c--7afbd424-5b38-450a-aab4-ba0d1eca81f2-prod.lovable.cloud" crossorigin>
+  <link rel="dns-prefetch" href="https://c--7afbd424-5b38-450a-aab4-ba0d1eca81f2-prod.lovable.cloud">
+
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Toidym">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="toıdym">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>Toidym</title>
+  <title>toıdym</title>
   <link rel="manifest" href="manifest.json">
   <style>
-    html, body { overscroll-behavior: none; }
-    body { margin: 0; background: #FFF5DF; }
-    #app-loading {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      display: grid;
-      place-content: center;
-      justify-items: center;
-      background: #2B2350;
-      color: #FFF5DF;
-      font: 600 16px system-ui, sans-serif;
+    body {
+      margin: 0;
+      background-color: #FFF5DF;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
     }
-    #app-loading p { margin: 0; }
-    #app-loading img { border-radius: 24px; }
+    #loading-splash {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background-color: #FFF5DF;
+      z-index: 999999;
+      transition: opacity 0.3s ease;
+    }
+    .splash-logo {
+      font-size: 38px;
+      font-weight: 800;
+      color: #2B2350;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+    .splash-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3.5px solid rgba(43, 35, 80, 0.15);
+      border-top-color: #2B2350;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
-  <div id="app-loading" role="status">
-    <img src="icons/Icon-192.png" width="120" height="120" alt="Toidym">
-    <p>Жүктелуде…</p>
+  <div id="loading-splash">
+    <div class="splash-logo">toıdym</div>
+    <div class="splash-spinner"></div>
   </div>
   <script>
-    window.addEventListener('flutter-first-frame', () => {
-      document.getElementById('app-loading').remove();
-    }, { once: true });
+    window.addEventListener('flutter-first-frame', function () {
+      var splash = document.getElementById('loading-splash');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(function() { splash.remove(); }, 300);
+      }
+    });
   </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
