@@ -581,6 +581,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Напоминать, когда любимые места выставляют боксы';
 
   @override
+  String get profileSnowfallAnimation => 'Анимация снегопада';
+
+  @override
+  String get profileSnowfallSubtitle =>
+      'Зимняя праздничная атмосфера в приложении';
+
+  @override
   String get profileCharityTitle => 'Подвешенный бокс для фонда';
 
   @override

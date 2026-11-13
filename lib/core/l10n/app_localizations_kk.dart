@@ -582,6 +582,12 @@ class AppLocalizationsKk extends AppLocalizations {
       'Сүйікті орындар бокс шығарғанда еске салу';
 
   @override
+  String get profileSnowfallAnimation => 'Қар жауу анимациясы';
+
+  @override
+  String get profileSnowfallSubtitle => 'Қосымшадағы қысқы мерекелік көңіл-күй';
+
+  @override
   String get profileCharityTitle => 'Қорға арналған бокс';
 
   @override

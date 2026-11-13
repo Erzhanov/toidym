@@ -283,6 +283,8 @@
   "profileFavoritesEmpty": "Нажмите на сердечко у бокса, чтобы не потерять любимое заведение",
   "profileFavoriteAlerts": "Боксы в любимых местах",
   "profileFavoriteAlertsSubtitle": "Напоминать, когда любимые места выставляют боксы",
+  "profileSnowfallAnimation": "Анимация снегопада",
+  "profileSnowfallSubtitle": "Зимняя праздничная атмосфера в приложении",
   "profileCharityTitle": "Подвешенный бокс для фонда",
   "profileCharitySubtitle": "Оплатите бокс — мы передадим его в благотворительный фонд Астаны",
   "profileCharityConfirm": "Подарить бокс фонду",

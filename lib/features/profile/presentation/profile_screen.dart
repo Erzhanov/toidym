@@ -93,6 +93,7 @@ class ProfileScreen extends ConsumerWidget {
     final user = ref.watch(currentUserProvider);
     final locale = ref.watch(localeProvider);
     final favoriteAlerts = ref.watch(favoriteAlertsProvider);
+    final snowfallEnabled = ref.watch(snowfallEnabledProvider);
     final isDesktop = MediaQuery.sizeOf(context).width >= 960;
 
     if (user == null) {
@@ -483,6 +484,26 @@ class ProfileScreen extends ConsumerWidget {
                 ),
                 subtitle: Text(
                   l10n.profileFavoriteAlertsSubtitle,
+                  style: AppTextStyles.caption,
+                ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Card(
+              child: SwitchListTile.adaptive(
+                value: snowfallEnabled,
+                onChanged: (value) async {
+                  ref.read(snowfallEnabledProvider.notifier).state = value;
+                  await ref
+                      .read(appPreferencesProvider)
+                      .setSnowfallEnabled(value);
+                },
+                title: Text(
+                  l10n.profileSnowfallAnimation,
+                  style: AppTextStyles.bodyLargeMedium,
+                ),
+                subtitle: Text(
+                  l10n.profileSnowfallSubtitle,
                   style: AppTextStyles.caption,
                 ),
               ),

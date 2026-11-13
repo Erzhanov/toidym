@@ -10,6 +10,7 @@ import 'package:toidym/app/theme/app_theme.dart';
 import 'package:toidym/core/l10n/app_localizations.dart';
 import 'package:toidym/core/storage/hive_storage.dart';
 import 'package:toidym/core/storage/secure_token_storage.dart';
+import 'package:toidym/shared/widgets/snowfall_overlay.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,6 +70,11 @@ class _ToidymAppState extends ConsumerState<ToidymApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       routerConfig: router,
+      builder: (context, child) {
+        return SnowfallOverlay(
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
     );
   }
 }

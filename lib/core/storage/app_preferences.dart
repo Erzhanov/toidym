@@ -14,6 +14,7 @@ class AppPreferences {
   static const _keyDistrict = 'toidym_district';
   static const _keyActiveMode = 'toidym_active_mode';
   static const _keyFavoriteAlerts = 'toidym_favorite_alerts';
+  static const _keySnowfallEnabled = 'toidym_snowfall_enabled';
   static const _keyDietaryPreferences = 'toidym_dietary_preferences';
 
   AppLanguage getLanguage() {
@@ -52,6 +53,13 @@ class AppPreferences {
 
   Future<void> setFavoriteAlertsEnabled(bool value) async {
     await _prefs.setBool(_keyFavoriteAlerts, value);
+  }
+
+  bool get isSnowfallEnabled =>
+      _prefs.getBool(_keySnowfallEnabled) ?? true;
+
+  Future<void> setSnowfallEnabled(bool value) async {
+    await _prefs.setBool(_keySnowfallEnabled, value);
   }
 
   Set<DietaryPreference> getDietaryPreferences() {

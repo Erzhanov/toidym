@@ -283,6 +283,8 @@
   "profileFavoritesEmpty": "Сүйікті мекемені жоғалтпау үшін жүрекшені басыңыз",
   "profileFavoriteAlerts": "Сүйікті орындардағы бокстар",
   "profileFavoriteAlertsSubtitle": "Сүйікті орындар бокс шығарғанда еске салу",
+  "profileSnowfallAnimation": "Қар жауу анимациясы",
+  "profileSnowfallSubtitle": "Қосымшадағы қысқы мерекелік көңіл-күй",
   "profileCharityTitle": "Қорға арналған бокс",
   "profileCharitySubtitle": "Боксты төлеңіз — біз оны Астанадағы қайырымдылық қорына жеткіземіз",
   "profileCharityConfirm": "Қорға бокс сыйлау",

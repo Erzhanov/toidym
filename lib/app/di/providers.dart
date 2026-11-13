@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -316,6 +317,15 @@ final auditLogsProvider = Provider<List<AuditLogEntry>>((ref) {
 
 final favoriteAlertsProvider = StateProvider<bool>((ref) {
   return ref.watch(appPreferencesProvider).favoriteAlertsEnabled;
+});
+
+final snowfallEnabledProvider = StateProvider<bool>((ref) {
+  // В тестах отключаем непрерывную анимацию оверлея, чтобы pumpAndSettle не зависал
+  final isTest = !kReleaseMode &&
+      (WidgetsBinding.instance.runtimeType.toString().contains('Test') ||
+          Zone.current[#flutter.test] != null);
+  if (isTest) return false;
+  return ref.watch(appPreferencesProvider).isSnowfallEnabled;
 });
 
 // ---------------------------------------------------------------------------

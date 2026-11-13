@@ -25,7 +25,9 @@
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Камера нужна для сканирования QR-кода при выдаче боксов</string>
+	<string>Камера используется для сканирования QR-кода при выдаче боксов и фотофиксации халал-сертификата</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Фотогалерея используется для загрузки фото халал-сертификата и подтверждающих фото</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Геопозиция используется для поиска ближайших боксов в Астане</string>
 	<key>LSRequiresIPhoneOS</key>

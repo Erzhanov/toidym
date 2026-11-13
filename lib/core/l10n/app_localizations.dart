@@ -1130,6 +1130,18 @@ abstract class AppLocalizations {
   /// **'Напоминать, когда любимые места выставляют боксы'**
   String get profileFavoriteAlertsSubtitle;
 
+  /// No description provided for @profileSnowfallAnimation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Анимация снегопада'**
+  String get profileSnowfallAnimation;
+
+  /// No description provided for @profileSnowfallSubtitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Зимняя праздничная атмосфера в приложении'**
+  String get profileSnowfallSubtitle;
+
   /// No description provided for @profileCharityTitle.
   ///
   /// In ru, this message translates to:
